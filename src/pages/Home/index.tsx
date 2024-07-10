@@ -3,7 +3,7 @@ import { Button } from "../../components/Button";
 
 export function Home() {
   return (
-    <div className="bg-pattern bg-no-repeat bg-center h-screen flex flex-col justify-center items-center gap-10 px-8">
+    <main className="bg-pattern bg-no-repeat bg-center h-screen flex flex-col justify-center items-center gap-10 px-8">
       <div className="flex-center flex-col gap-2">
         <img src="/planner-logo.svg" alt="plann.er logo" />
         <p className="text-center">
@@ -22,13 +22,13 @@ export function Home() {
         <div className="flex-center gap-2">
           <Calendar className="size-5" />
           <input
-            className="outline-none bg-transparent max-w-32 flex-1"
+            className="outline-none bg-transparent max-w-36 flex-1"
             type="text"
             placeholder="Quando?"
           />
         </div>
         <div className="w-px h-6 sm:mx-3 bg-neutral-800" />
-        <Button type="button" className="flex-center min-w-max">
+        <Button primaryStyle type="button" className="">
           Continuar
           <ArrowRight className="size-5" />
         </Button>
@@ -41,11 +41,11 @@ export function Home() {
           termos de uso
         </a>{" "}
         e{" "}
-        <a href="" className="text-neutral-300 underline">
+        <a href="#" className="text-neutral-300 underline">
           políticas de privacidade
         </a>
         .
       </p>
-    </div>
+    </main>
   );
 }
