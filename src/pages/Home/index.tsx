@@ -13,6 +13,7 @@ import {
 import { FormEvent, useState } from "react";
 import { Button } from "../../components/Button";
 import { Modal } from "../../components/Modal";
+import { iconStyle, inputIconStyle } from "../../utils";
 
 export function Home() {
   const [isInviteInputOpen, setIsInviteInputOpen] = useState(false);
@@ -58,7 +59,7 @@ export function Home() {
       <div className="w-full flex-center flex-col gap-4">
         <div className="w-[760px] max-w-full min-h-16 py-3 px-6 rounded-xl shadow-shape flex-center flex-wrap gap-4 sm:gap-2 bg-neutral-900">
           <div className="flex-center gap-2 w-full sm:w-max sm:flex-1">
-            <MapPin className="size-5" />
+            <MapPin className={inputIconStyle} />
             <input
               className="outline-none bg-transparent flex-1"
               type="text"
@@ -69,7 +70,7 @@ export function Home() {
             />
           </div>
           <div className="flex-center gap-2 w-full sm:w-max">
-            <Calendar className="size-5" />
+            <Calendar className={inputIconStyle} />
             <input
               className="outline-none bg-transparent sm:max-w-28 lg:max-w-36 flex-1"
               type="text"
@@ -82,22 +83,22 @@ export function Home() {
           <div className="hidden sm:block w-px h-6 sm:mx-3 bg-neutral-800" />
           {!isInviteInputOpen ? (
             <Button
-              primaryStyle
               type="button"
               onClick={() => setIsInviteInputOpen(true)}
               className="w-full sm:w-max"
             >
               Continuar
-              <ArrowRight className="size-5" />
+              <ArrowRight className={iconStyle} />
             </Button>
           ) : (
             <Button
+              variant="secondary"
               type="button"
               onClick={() => setIsInviteInputOpen(false)}
               className="w-full sm:w-max"
             >
               Alterar local/data
-              <Settings2 className="size-5" />
+              <Settings2 className={iconStyle} />
             </Button>
           )}
         </div>
@@ -107,7 +108,7 @@ export function Home() {
               className="flex items-center gap-2 sm:flex-1 text-left w-full sm:w-max"
               onClick={() => setIsGuestModalOpen(true)}
             >
-              <UserRoundPlus className="size-5" />
+              <UserRoundPlus className={inputIconStyle} />
               {guestList.length > 0 ? (
                 <span className="text-neutral-100 sm:text-lg sm:flex-1">
                   {guestList.length} pessoa(s) convidada(s)
@@ -119,13 +120,12 @@ export function Home() {
               )}
             </button>
             <Button
-              primaryStyle
               type="button"
               className="w-full sm:w-max"
               onClick={() => setIsConfirmModalOpen(true)}
             >
               Confirmar viagem
-              <ArrowRight className="size-5" />
+              <ArrowRight className={iconStyle} />
             </Button>
           </div>
         )}
@@ -168,7 +168,7 @@ export function Home() {
                     title="remover"
                     onClick={() => deleteGuestEmail(email)}
                   >
-                    <X className="size-5" />
+                    <X className={iconStyle} />
                   </button>
                 </div>
               ))}
@@ -180,7 +180,7 @@ export function Home() {
             className="w-full min-h-16 py-3 px-6 rounded-xl shadow-shape flex-center flex-wrap gap-4 sm:gap-2 bg-neutral-950"
           >
             <div className="flex-center gap-2 flex-1">
-              <AtSign className="size-5" />
+              <AtSign className={inputIconStyle} />
               <input
                 className="outline-none bg-transparent flex-1 text-xs sm:text-base"
                 type="email"
@@ -189,9 +189,9 @@ export function Home() {
                 placeholder="Digite o e-mail do convidado"
               />
             </div>
-            <Button primaryStyle type="submit" className="w-full sm:w-max">
+            <Button type="submit" className="w-full sm:w-max">
               Convidar
-              <Plus className="size-5" />
+              <Plus className={iconStyle} />
             </Button>
           </form>
         </div>
@@ -216,7 +216,7 @@ export function Home() {
             </p>
           </div>
           <div className="flex-center gap-2 w-full bg-neutral-950 px-4 py-2.5 rounded-lg h-14">
-            <User className="size-5 text-neutral-500" />
+            <User className={inputIconStyle} />
             <input
               className="outline-none bg-transparent flex-1 text-xs sm:text-base"
               type="text"
@@ -226,7 +226,7 @@ export function Home() {
             />
           </div>
           <div className="flex-center gap-2 w-full bg-neutral-950 px-4 py-2.5 rounded-lg h-14">
-            <Mail className="size-5 text-neutral-500" />
+            <Mail className={inputIconStyle} />
             <input
               className="outline-none bg-transparent flex-1 text-xs sm:text-base"
               type="email"
@@ -235,7 +235,7 @@ export function Home() {
               placeholder="Seu e-mail pessoal"
             />
           </div>
-          <Button primaryStyle type="submit" className="w-full mt-1">
+          <Button type="submit" className="w-full mt-1">
             Confirmar criação da viagem
           </Button>
         </div>
