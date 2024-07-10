@@ -2,9 +2,11 @@ import {
   ArrowRight,
   AtSign,
   Calendar,
+  Mail,
   MapPin,
   Plus,
   Settings2,
+  User,
   UserRoundPlus,
   X,
 } from "lucide-react";
@@ -14,7 +16,8 @@ import { Modal } from "../../components/Modal";
 
 export function Home() {
   const [isInviteInputOpen, setIsInviteInputOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [guestList, setGuestList] = useState<string[]>([]);
 
   const handleGuestInvite = (event: FormEvent<HTMLFormElement>) => {
@@ -102,7 +105,7 @@ export function Home() {
           <div className="w-[760px] max-w-full min-h-16 py-3 px-6 rounded-xl shadow-shape flex-center flex-wrap gap-4 sm:gap-2 bg-neutral-900">
             <button
               className="flex items-center gap-2 sm:flex-1 text-left w-full sm:w-max"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setIsGuestModalOpen(true)}
             >
               <UserRoundPlus className="size-5" />
               {guestList.length > 0 ? (
@@ -115,7 +118,12 @@ export function Home() {
                 </span>
               )}
             </button>
-            <Button primaryStyle type="button" className="w-full sm:w-max">
+            <Button
+              primaryStyle
+              type="button"
+              className="w-full sm:w-max"
+              onClick={() => setIsConfirmModalOpen(true)}
+            >
               Confirmar viagem
               <ArrowRight className="size-5" />
             </Button>
@@ -135,7 +143,10 @@ export function Home() {
         </a>
         .
       </p>
-      <Modal isModalOpen={isModalOpen} closeModal={() => setIsModalOpen(false)}>
+      <Modal
+        isModalOpen={isGuestModalOpen}
+        closeModal={() => setIsGuestModalOpen(false)}
+      >
         <div className="lg:w-[720px] max-w-full flex flex-col gap-5">
           <div className="flex flex-col gap-2">
             <h2 className="font-lg font-semibold">Selecionar convidados</h2>
@@ -183,6 +194,50 @@ export function Home() {
               <Plus className="size-5" />
             </Button>
           </form>
+        </div>
+      </Modal>
+      <Modal
+        isModalOpen={isConfirmModalOpen}
+        closeModal={() => setIsConfirmModalOpen(false)}
+      >
+        <div className="lg:w-[540px] max-w-full flex flex-col gap-2">
+          <div className="flex flex-col gap-2 mb-2">
+            <h2 className="font-lg font-semibold">
+              Confirmar criação da viagem
+            </h2>
+            <p className="text-sm text-zinc-400">
+              Para concluir a criação da viagem para{" "}
+              <span className="text-neutral-100 font-bold">SP</span> nas datas
+              de{" "}
+              <span className="text-neutral-100 font-bold">
+                16 a 27 de Agosto de 2024
+              </span>{" "}
+              preencha seus dados abaixo:
+            </p>
+          </div>
+          <div className="flex-center gap-2 w-full bg-neutral-950 px-4 py-2.5 rounded-lg h-14">
+            <User className="size-5 text-neutral-500" />
+            <input
+              className="outline-none bg-transparent flex-1 text-xs sm:text-base"
+              type="text"
+              id="fullName"
+              name="fullName"
+              placeholder="Seu nome completo"
+            />
+          </div>
+          <div className="flex-center gap-2 w-full bg-neutral-950 px-4 py-2.5 rounded-lg h-14">
+            <Mail className="size-5 text-neutral-500" />
+            <input
+              className="outline-none bg-transparent flex-1 text-xs sm:text-base"
+              type="email"
+              id="personalEmail"
+              name="personalEmail"
+              placeholder="Seu e-mail pessoal"
+            />
+          </div>
+          <Button primaryStyle type="submit" className="w-full mt-1">
+            Confirmar criação da viagem
+          </Button>
         </div>
       </Modal>
     </main>
