@@ -1,6 +1,6 @@
 import { ComponentProps, ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
 import { tv, VariantProps } from "tailwind-variants";
+import { twMerge } from "tailwind-merge";
 
 const buttonVariants = tv({
   base: "flex-center min-w-max gap-2 px-2.5 py-2 sm:px-5 rounded-lg shadow-shape transition-all enabled:active:scale-95",
