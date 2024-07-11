@@ -18,3 +18,7 @@ body {
   background-color: #09090b;
   color: #f3f4f6;
 }
+
+.rdp{
+    --rdp-background-color: #0284c7; /* Background color for the hovered/focused elements. */
+}

@@ -26,7 +26,7 @@ export function Modal({ isModalOpen, children, closeModal }: ModalProps) {
           onClick={closeModal}
         />
         <div className="modal-container max-w-full p-5 flex-center z-50">
-          <div className="relative bg-neutral-900 py-5 px-6 rounded-xl">
+          <div className="relative bg-neutral-900 py-5 px-6 rounded-xl shadow-shape">
             <button
               type="button"
               title="fechar"

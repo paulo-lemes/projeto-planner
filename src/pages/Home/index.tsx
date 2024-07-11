@@ -10,7 +10,6 @@ import {
   UserRoundPlus,
   X,
 } from "lucide-react";
-import "react-day-picker/dist/style.css";
 import { FormEvent, useState } from "react";
 import { Button } from "../../components/Button";
 import { Modal } from "../../components/Modal";
@@ -18,6 +17,8 @@ import { iconStyle, inputIconStyle } from "../../utils";
 import { DateRange, DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../lib/axios";
+import { ptBR } from "date-fns/locale";
 
 export function Home() {
   const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false);
@@ -66,19 +67,36 @@ export function Home() {
     setGuestList(newGuestList);
   };
 
-  const handleConfirmTrip = (event: FormEvent<HTMLFormElement>) => {
+  const handleConfirmTrip = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
     const fullName = data.get("fullName")?.toString();
     const personalEmail = data.get("personalEmail")?.toString();
 
-    if (!fullName || !personalEmail) {
+    if (!fullName || !personalEmail || !tripStartAndEndDates) {
       alert("Preencha os campos para criar a viagem");
       return;
     }
 
-    navigate(`/trips/${"id"}`);
+    try {
+      const response = await api.post("/trips", {
+        destination,
+        starts_at: tripStartAndEndDates.from,
+        ends_at: tripStartAndEndDates.to,
+        emails_to_invite: guestList,
+        owner_name: fullName,
+        owner_email: personalEmail,
+      });
+
+      console.log(response);
+      const { tripId } = response.data;
+
+      navigate(`/trips/${tripId}`);
+    } catch (error) {
+      console.log("Erro -" + error);
+      alert("Ocorreu um erro ao criar a viagem. Tente novamente.");
+    }
   };
 
   const displayedDate =
@@ -102,7 +120,7 @@ export function Home() {
       <main className="w-full flex-center flex-col gap-4">
         {/* Location and date inputs */}
         <div className="w-[760px] max-w-full min-h-16 py-3 px-6 rounded-xl shadow-shape flex-center flex-wrap gap-4 sm:gap-2 bg-neutral-900">
-          <div className="flex-center gap-1 w-full sm:w-max sm:flex-1">
+          <div className="flex-center gap-1 w-full mt-1.5 sm:mt-0 sm:w-max sm:flex-1">
             <MapPin className={inputIconStyle} />
             <input
               className="outline-none bg-transparent flex-1 placeholder:text-neutral-400 rounded-md pl-1"
@@ -138,8 +156,11 @@ export function Home() {
             <h3 className="font-bold sm:text-lg">Selecione o período</h3>
             <DayPicker
               mode="range"
+              locale={ptBR}
               selected={tripStartAndEndDates}
               onSelect={setTripStartAndEndDates}
+              className="overflow-x-auto"
+              disabled={{ before: new Date() }}
               modifiersClassNames={{
                 selected: "bg-primary-400 text-neutral-950",
               }}
@@ -304,10 +325,10 @@ export function Home() {
             </h2>
             <p className="text-sm text-zinc-400">
               Para concluir a criação da viagem para{" "}
-              <span className="text-neutral-100 font-bold">SP</span> nas datas
-              de{" "}
+              <span className="text-neutral-100 font-bold">{destination}</span>{" "}
+              nas datas de{" "}
               <span className="text-neutral-100 font-bold">
-                16 a 27 de Agosto de 2024
+                {displayedDate}
               </span>{" "}
               preencha seus dados abaixo:
             </p>
