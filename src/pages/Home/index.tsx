@@ -10,18 +10,36 @@ import {
   UserRoundPlus,
   X,
 } from "lucide-react";
+import "react-day-picker/dist/style.css";
 import { FormEvent, useState } from "react";
 import { Button } from "../../components/Button";
 import { Modal } from "../../components/Modal";
 import { iconStyle, inputIconStyle } from "../../utils";
+import { DateRange, DayPicker } from "react-day-picker";
+import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 export function Home() {
-  const [isInviteInputOpen, setIsInviteInputOpen] = useState(false);
-  const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false);
+  const [isInviteSectionOpen, setIsInviteSectionOpen] = useState(false);
+  const [isInviteGuestsModalOpen, setIsInviteGuestsModalOpen] = useState(false);
+  const [isConfirmTripModalOpen, setIsConfirmTripModalOpen] = useState(false);
+
+  const [destination, setDestination] = useState<string>("");
+  const [tripStartAndEndDates, setTripStartAndEndDates] = useState<
+    DateRange | undefined
+  >();
   const [guestList, setGuestList] = useState<string[]>([]);
 
-  const handleGuestInvite = (event: FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+
+  const openInviteSection = () => {
+    destination && displayedDate
+      ? setIsInviteSectionOpen(true)
+      : alert("Preencha as informações de destino e período para prosseguir");
+  };
+
+  const addGuestEmail = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -48,43 +66,108 @@ export function Home() {
     setGuestList(newGuestList);
   };
 
+  const handleConfirmTrip = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+    const fullName = data.get("fullName")?.toString();
+    const personalEmail = data.get("personalEmail")?.toString();
+
+    if (!fullName || !personalEmail) {
+      alert("Preencha os campos para criar a viagem");
+      return;
+    }
+
+    navigate(`/trips/${"id"}`);
+  };
+
+  const displayedDate =
+    tripStartAndEndDates && tripStartAndEndDates.from && tripStartAndEndDates.to
+      ? format(tripStartAndEndDates.from, "d' de 'LLL")
+          .concat(" até ")
+          .concat(format(tripStartAndEndDates.to, "d' de 'LLL"))
+      : null;
+
   return (
-    <main className="bg-pattern bg-no-repeat bg-center min-h-screen flex flex-col justify-center items-center gap-10 px-8 py-5">
-      <div className="flex-center flex-col gap-2">
+    <div className="bg-pattern bg-no-repeat bg-center min-h-screen flex flex-col justify-center items-center gap-10 px-8 py-5">
+      {/* Logo and description div */}
+      <header className="flex-center flex-col gap-2">
         <img src="/planner-logo.svg" alt="plann.er logo" />
         <p className="text-center">
           Convide seus amigos e planeje sua próxima viagem!
         </p>
-      </div>
-      <div className="w-full flex-center flex-col gap-4">
+      </header>
+
+      {/* Inputs section */}
+      <main className="w-full flex-center flex-col gap-4">
+        {/* Location and date inputs */}
         <div className="w-[760px] max-w-full min-h-16 py-3 px-6 rounded-xl shadow-shape flex-center flex-wrap gap-4 sm:gap-2 bg-neutral-900">
-          <div className="flex-center gap-2 w-full sm:w-max sm:flex-1">
+          <div className="flex-center gap-1 w-full sm:w-max sm:flex-1">
             <MapPin className={inputIconStyle} />
             <input
-              className="outline-none bg-transparent flex-1"
+              className="outline-none bg-transparent flex-1 placeholder:text-neutral-400 rounded-md pl-1"
               type="text"
               id="location"
               name="location"
               placeholder="Para onde você vai?"
-              disabled={isInviteInputOpen}
+              disabled={isInviteSectionOpen}
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
             />
           </div>
-          <div className="flex-center gap-2 w-full sm:w-max">
+          <button
+            disabled={isInviteSectionOpen}
+            onClick={() => setIsDatePickerModalOpen(true)}
+            className="flex items-center gap-2 text-left w-full sm:w-max sm:min-w-28 lg:min-w-36"
+          >
             <Calendar className={inputIconStyle} />
-            <input
-              className="outline-none bg-transparent sm:max-w-28 lg:max-w-36 flex-1"
-              type="text"
-              id="date"
-              name="date"
-              placeholder="Quando?"
-              disabled={isInviteInputOpen}
+            <span
+              className={`w-max shrink-0 ${
+                displayedDate ? "text-neutral-100" : "text-neutral-400"
+              }`}
+            >
+              {displayedDate || "Quando?"}
+            </span>
+          </button>
+
+          {/* Date picker modal */}
+          <Modal
+            isModalOpen={isDatePickerModalOpen}
+            closeModal={() => setIsDatePickerModalOpen(false)}
+          >
+            <h3 className="font-bold sm:text-lg">Selecione o período</h3>
+            <DayPicker
+              mode="range"
+              selected={tripStartAndEndDates}
+              onSelect={setTripStartAndEndDates}
+              modifiersClassNames={{
+                selected: "bg-primary-400 text-neutral-950",
+              }}
             />
-          </div>
-          <div className="hidden sm:block w-px h-6 sm:mx-3 bg-neutral-800" />
-          {!isInviteInputOpen ? (
             <Button
               type="button"
-              onClick={() => setIsInviteInputOpen(true)}
+              onClick={() => setIsDatePickerModalOpen(false)}
+              className="w-full mb-3"
+            >
+              Confirmar
+            </Button>
+            {tripStartAndEndDates && (
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={() => setTripStartAndEndDates(undefined)}
+                className="w-full"
+              >
+                Limpar
+              </Button>
+            )}
+          </Modal>
+
+          <div className="hidden sm:block w-px h-6 sm:mx-3 bg-neutral-800" />
+          {!isInviteSectionOpen ? (
+            <Button
+              type="button"
+              onClick={openInviteSection}
               className="w-full sm:w-max"
             >
               Continuar
@@ -94,7 +177,7 @@ export function Home() {
             <Button
               variant="secondary"
               type="button"
-              onClick={() => setIsInviteInputOpen(false)}
+              onClick={() => setIsInviteSectionOpen(false)}
               className="w-full sm:w-max"
             >
               Alterar local/data
@@ -102,11 +185,14 @@ export function Home() {
             </Button>
           )}
         </div>
-        {isInviteInputOpen && (
+
+        {/* Invite and continue section */}
+        {isInviteSectionOpen && (
           <div className="w-[760px] max-w-full min-h-16 py-3 px-6 rounded-xl shadow-shape flex-center flex-wrap gap-4 sm:gap-2 bg-neutral-900">
             <button
+              type="button"
               className="flex items-center gap-2 sm:flex-1 text-left w-full sm:w-max"
-              onClick={() => setIsGuestModalOpen(true)}
+              onClick={() => setIsInviteGuestsModalOpen(true)}
             >
               <UserRoundPlus className={inputIconStyle} />
               {guestList.length > 0 ? (
@@ -122,30 +208,36 @@ export function Home() {
             <Button
               type="button"
               className="w-full sm:w-max"
-              onClick={() => setIsConfirmModalOpen(true)}
+              onClick={() => setIsConfirmTripModalOpen(true)}
             >
               Confirmar viagem
               <ArrowRight className={iconStyle} />
             </Button>
           </div>
         )}
-      </div>
-      <p className="text-neutral-500 text-sm text-center">
-        Ao planejar sua viagem pela plann.er você automaticamente concorda{" "}
-        <br className="hidden sm:block" />
-        com nossos{" "}
-        <a href="#" className="text-neutral-300 underline">
-          termos de uso
-        </a>{" "}
-        e{" "}
-        <a href="#" className="text-neutral-300 underline">
-          políticas de privacidade
-        </a>
-        .
-      </p>
+      </main>
+
+      {/* Footer description   */}
+      <footer>
+        <p className="text-neutral-500 text-sm text-center">
+          Ao planejar sua viagem pela plann.er você automaticamente concorda{" "}
+          <br className="hidden sm:block" />
+          com nossos{" "}
+          <a href="#" className="text-neutral-300 underline">
+            termos de uso
+          </a>{" "}
+          e{" "}
+          <a href="#" className="text-neutral-300 underline">
+            políticas de privacidade
+          </a>
+          .
+        </p>
+      </footer>
+
+      {/* Invite guests modal */}
       <Modal
-        isModalOpen={isGuestModalOpen}
-        closeModal={() => setIsGuestModalOpen(false)}
+        isModalOpen={isInviteGuestsModalOpen}
+        closeModal={() => setIsInviteGuestsModalOpen(false)}
       >
         <div className="lg:w-[720px] max-w-full flex flex-col gap-5">
           <div className="flex flex-col gap-2">
@@ -176,7 +268,7 @@ export function Home() {
           )}
           <div className="h-px w-full bg-neutral-800" />
           <form
-            onSubmit={handleGuestInvite}
+            onSubmit={addGuestEmail}
             className="w-full min-h-16 py-3 px-6 rounded-xl shadow-shape flex-center flex-wrap gap-4 sm:gap-2 bg-neutral-950"
           >
             <div className="flex-center gap-2 flex-1">
@@ -196,11 +288,16 @@ export function Home() {
           </form>
         </div>
       </Modal>
+
+      {/* Confirm trip modal */}
       <Modal
-        isModalOpen={isConfirmModalOpen}
-        closeModal={() => setIsConfirmModalOpen(false)}
+        isModalOpen={isConfirmTripModalOpen}
+        closeModal={() => setIsConfirmTripModalOpen(false)}
       >
-        <div className="lg:w-[540px] max-w-full flex flex-col gap-2">
+        <form
+          onSubmit={handleConfirmTrip}
+          className="lg:w-[540px] max-w-full flex flex-col gap-2"
+        >
           <div className="flex flex-col gap-2 mb-2">
             <h2 className="font-lg font-semibold">
               Confirmar criação da viagem
@@ -238,8 +335,8 @@ export function Home() {
           <Button type="submit" className="w-full mt-1">
             Confirmar criação da viagem
           </Button>
-        </div>
+        </form>
       </Modal>
-    </main>
+    </div>
   );
 }
