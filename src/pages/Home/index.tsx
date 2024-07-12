@@ -19,6 +19,7 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { api } from "@/lib/axios";
 import { ptBR } from "date-fns/locale";
+import { InputGroupWrapper } from "@/components/InputGroupWrapper";
 
 export function Home() {
   const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false);
@@ -119,7 +120,7 @@ export function Home() {
       {/* Inputs section */}
       <main className="w-full flex-center flex-col gap-4">
         {/* Location and date inputs */}
-        <div className="w-[760px] max-w-full min-h-16 py-3 px-6 rounded-xl shadow-shape flex-center flex-wrap gap-4 sm:gap-2 bg-neutral-900">
+        <InputGroupWrapper>
           <div className="flex-center gap-1 w-full mt-1.5 sm:mt-0 sm:w-max sm:flex-1">
             <MapPin className={inputIconStyle} />
             <input
@@ -205,11 +206,11 @@ export function Home() {
               <Settings2 className={iconStyle} />
             </Button>
           )}
-        </div>
+        </InputGroupWrapper>
 
         {/* Invite and continue section */}
         {isInviteSectionOpen && (
-          <div className="w-[760px] max-w-full min-h-16 py-3 px-6 rounded-xl shadow-shape flex-center flex-wrap gap-4 sm:gap-2 bg-neutral-900">
+          <InputGroupWrapper>
             <button
               type="button"
               className="flex items-center gap-2 sm:flex-1 text-left w-full sm:w-max"
@@ -234,7 +235,7 @@ export function Home() {
               Confirmar viagem
               <ArrowRight className={iconStyle} />
             </Button>
-          </div>
+          </InputGroupWrapper>
         )}
       </main>
 
