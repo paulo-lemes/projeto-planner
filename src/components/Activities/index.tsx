@@ -61,11 +61,12 @@ export function Activities({ tripId }: ActivitiesProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap gap-2 items-center justify-between">
         <h2 className="text-3xl font-semibold">Atividades</h2>
         <Button
           type="button"
           onClick={() => setIsCreateActivityModalOpen(true)}
+          className="w-full sm:w-max"
         >
           <Plus className="size-5" />
           Cadastrar atividade
@@ -74,31 +75,29 @@ export function Activities({ tripId }: ActivitiesProps) {
 
       {/* List of activities */}
       <div className="space-y-8">
-        {activities.map((category) => {
+        {activities.map(({ date, activities }) => {
           return (
-            <div key={category.date} className="space-y-2.5">
+            <div key={date} className="space-y-2.5">
               <div className="flex gap-2 items-baseline">
                 <span className="text-xl text-neutral-300 font-semibold">
-                  Dia {format(category.date, "d")}
+                  Dia {format(date, "d")}
                 </span>
                 <span className="text-xs text-neutral-500">
-                  {format(category.date, "EEEE", { locale: ptBR })}
+                  {format(date, "EEEE", { locale: ptBR })}
                 </span>
               </div>
-              {category.activities.length > 0 ? (
+              {activities.length > 0 ? (
                 <div className="space-y-2.5">
-                  {category.activities.map((activity) => {
+                  {activities.map(({ id, title, occurs_at }) => {
                     return (
                       <div
-                        key={activity.id}
+                        key={id}
                         className="px-4 py-2.5 bg-neutral-900 rounded-xl shadow-shape flex items-center gap-3"
                       >
                         <CircleCheck className="size-5 text-primary-300" />
-                        <span className="text-neutral-100">
-                          {activity.title}
-                        </span>
+                        <span className="text-neutral-100">{title}</span>
                         <span className="text-neutral-400 text-sm ml-auto">
-                          {format(activity.occurs_at, "HH:mm")}h
+                          {format(occurs_at, "HH:mm")}h
                         </span>
                       </div>
                     );
