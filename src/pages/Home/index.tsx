@@ -11,13 +11,13 @@ import {
   X,
 } from "lucide-react";
 import { FormEvent, useState } from "react";
-import { Button } from "../../components/Button";
-import { Modal } from "../../components/Modal";
-import { iconStyle, inputIconStyle } from "../../utils";
+import { Button } from "@/components/Button";
+import { Modal } from "@/components/Modal";
+import { iconStyle, inputIconStyle } from "@/utils";
 import { DateRange, DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import { api } from "../../lib/axios";
+import { api } from "@/lib/axios";
 import { ptBR } from "date-fns/locale";
 
 export function Home() {
