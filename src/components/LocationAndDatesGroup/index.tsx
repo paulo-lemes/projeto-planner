@@ -4,13 +4,12 @@ import { inputIconStyle } from "@/utils";
 import { MapPin, Calendar } from "lucide-react";
 import { DayPicker, DateRange } from "react-day-picker";
 import { ptBR } from "date-fns/locale";
+import { useState } from "react";
 
 interface LocationAndDatesGroupProps {
   destination: string;
   setDestination: (value: string) => void;
-  isInviteSectionOpen: boolean;
-  isDatePickerModalOpen: boolean;
-  setIsDatePickerModalOpen: (value: boolean) => void;
+  isInputsDisabled: boolean;
   tripStartAndEndDates: DateRange | undefined;
   setTripStartAndEndDates: (value: DateRange | undefined) => void;
   displayedDate: string | null;
@@ -19,13 +18,13 @@ interface LocationAndDatesGroupProps {
 export function LocationAndDatesGroup({
   destination,
   setDestination,
-  isInviteSectionOpen,
-  isDatePickerModalOpen,
-  setIsDatePickerModalOpen,
+  isInputsDisabled,
   tripStartAndEndDates,
   setTripStartAndEndDates,
   displayedDate,
 }: LocationAndDatesGroupProps) {
+  const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false);
+
   return (
     <>
       <div className="flex-center gap-1 w-full mt-1.5 sm:mt-0 sm:w-max sm:flex-1">
@@ -36,13 +35,13 @@ export function LocationAndDatesGroup({
           id="location"
           name="location"
           placeholder="Para onde você vai?"
-          disabled={isInviteSectionOpen}
+          disabled={isInputsDisabled}
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
         />
       </div>
       <button
-        disabled={isInviteSectionOpen}
+        disabled={isInputsDisabled}
         onClick={() => setIsDatePickerModalOpen(true)}
         className="flex items-center gap-2 text-left w-full sm:w-max sm:min-w-28 lg:min-w-36"
       >
@@ -90,7 +89,7 @@ export function LocationAndDatesGroup({
           </Button>
         )}
       </Modal>
-      <div className="hidden sm:block w-px h-6 sm:mx-3 bg-neutral-800" />
+      <div className="hidden sm:block w-px h-6 sm:mx-3 bg-neutral-800 self-center" />
     </>
   );
 }

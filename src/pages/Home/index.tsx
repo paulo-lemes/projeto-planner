@@ -1,9 +1,7 @@
 import {
   ArrowRight,
   AtSign,
-  Calendar,
   Mail,
-  MapPin,
   Plus,
   Settings2,
   User,
@@ -12,18 +10,15 @@ import {
 } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { InputGroupWrapper } from "@/components/InputGroupWrapper";
-import { DateRange, DayPicker } from "react-day-picker";
-import { ptBR } from "date-fns/locale";
-import { format } from "date-fns";
+import { DateRange } from "react-day-picker";
 import { Button } from "@/components/Button";
 import { Modal } from "@/components/Modal";
-import { iconStyle, inputIconStyle } from "@/utils";
+import { formatDisplayedDate, iconStyle, inputIconStyle } from "@/utils";
 import { api } from "@/lib/axios";
 import { useNavigate } from "react-router-dom";
 import { LocationAndDatesGroup } from "@/components/LocationAndDatesGroup";
 
 export function Home() {
-  const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false);
   const [isInviteSectionOpen, setIsInviteSectionOpen] = useState(false);
   const [isInviteGuestsModalOpen, setIsInviteGuestsModalOpen] = useState(false);
   const [isConfirmTripModalOpen, setIsConfirmTripModalOpen] = useState(false);
@@ -101,12 +96,7 @@ export function Home() {
     }
   };
 
-  const displayedDate =
-    tripStartAndEndDates && tripStartAndEndDates.from && tripStartAndEndDates.to
-      ? format(tripStartAndEndDates.from, "d' de 'LLL")
-          .concat(" até ")
-          .concat(format(tripStartAndEndDates.to, "d' de 'LLL"))
-      : null;
+  const displayedDate = formatDisplayedDate(tripStartAndEndDates);
 
   return (
     <div className="bg-pattern bg-no-repeat bg-center min-h-screen flex flex-col justify-center items-center gap-10 px-8 py-5">
@@ -125,9 +115,7 @@ export function Home() {
           <LocationAndDatesGroup
             destination={destination}
             setDestination={setDestination}
-            isInviteSectionOpen={isInviteSectionOpen}
-            isDatePickerModalOpen={isDatePickerModalOpen}
-            setIsDatePickerModalOpen={setIsDatePickerModalOpen}
+            isInputsDisabled={isInviteSectionOpen}
             tripStartAndEndDates={tripStartAndEndDates}
             setTripStartAndEndDates={setTripStartAndEndDates}
             displayedDate={displayedDate}
