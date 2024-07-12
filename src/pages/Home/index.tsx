@@ -11,15 +11,16 @@ import {
   X,
 } from "lucide-react";
 import { FormEvent, useState } from "react";
+import { InputGroupWrapper } from "@/components/InputGroupWrapper";
+import { DateRange, DayPicker } from "react-day-picker";
+import { ptBR } from "date-fns/locale";
+import { format } from "date-fns";
 import { Button } from "@/components/Button";
 import { Modal } from "@/components/Modal";
 import { iconStyle, inputIconStyle } from "@/utils";
-import { DateRange, DayPicker } from "react-day-picker";
-import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
 import { api } from "@/lib/axios";
-import { ptBR } from "date-fns/locale";
-import { InputGroupWrapper } from "@/components/InputGroupWrapper";
+import { useNavigate } from "react-router-dom";
+import { LocationAndDatesGroup } from "@/components/LocationAndDatesGroup";
 
 export function Home() {
   const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false);
@@ -121,71 +122,16 @@ export function Home() {
       <main className="w-full flex-center flex-col gap-4">
         {/* Location and date inputs */}
         <InputGroupWrapper>
-          <div className="flex-center gap-1 w-full mt-1.5 sm:mt-0 sm:w-max sm:flex-1">
-            <MapPin className={inputIconStyle} />
-            <input
-              className="outline-none bg-transparent flex-1 placeholder:text-neutral-400 rounded-md pl-1"
-              type="text"
-              id="location"
-              name="location"
-              placeholder="Para onde você vai?"
-              disabled={isInviteSectionOpen}
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
-            />
-          </div>
-          <button
-            disabled={isInviteSectionOpen}
-            onClick={() => setIsDatePickerModalOpen(true)}
-            className="flex items-center gap-2 text-left w-full sm:w-max sm:min-w-28 lg:min-w-36"
-          >
-            <Calendar className={inputIconStyle} />
-            <span
-              className={`w-max shrink-0 ${
-                displayedDate ? "text-neutral-100" : "text-neutral-400"
-              }`}
-            >
-              {displayedDate || "Quando?"}
-            </span>
-          </button>
-
-          {/* Date picker modal */}
-          <Modal
-            isModalOpen={isDatePickerModalOpen}
-            closeModal={() => setIsDatePickerModalOpen(false)}
-          >
-            <h3 className="font-bold sm:text-lg">Selecione o período</h3>
-            <DayPicker
-              mode="range"
-              locale={ptBR}
-              selected={tripStartAndEndDates}
-              onSelect={setTripStartAndEndDates}
-              className="overflow-x-auto"
-              disabled={{ before: new Date() }}
-              modifiersClassNames={{
-                selected: "bg-primary-400 text-neutral-950",
-              }}
-            />
-            <Button
-              type="button"
-              onClick={() => setIsDatePickerModalOpen(false)}
-              className="w-full mb-3"
-            >
-              Confirmar
-            </Button>
-            {tripStartAndEndDates && (
-              <Button
-                variant="secondary"
-                type="button"
-                onClick={() => setTripStartAndEndDates(undefined)}
-                className="w-full"
-              >
-                Limpar
-              </Button>
-            )}
-          </Modal>
-
-          <div className="hidden sm:block w-px h-6 sm:mx-3 bg-neutral-800" />
+          <LocationAndDatesGroup
+            destination={destination}
+            setDestination={setDestination}
+            isInviteSectionOpen={isInviteSectionOpen}
+            isDatePickerModalOpen={isDatePickerModalOpen}
+            setIsDatePickerModalOpen={setIsDatePickerModalOpen}
+            tripStartAndEndDates={tripStartAndEndDates}
+            setTripStartAndEndDates={setTripStartAndEndDates}
+            displayedDate={displayedDate}
+          />
           {!isInviteSectionOpen ? (
             <Button
               type="button"
@@ -291,12 +237,12 @@ export function Home() {
           <div className="h-px w-full bg-neutral-800" />
           <form
             onSubmit={addGuestEmail}
-            className="w-full min-h-16 py-3 px-6 rounded-xl shadow-shape flex-center flex-wrap gap-4 sm:gap-2 bg-neutral-950"
+            className="w-full min-h-16 py-3 px-6 rounded-xl shadow-shape flex-center flex-wrap gap-4 sm:gap-2 bg-neutral-950 sm:h-14"
           >
-            <div className="flex-center gap-2 flex-1">
+            <div className="flex-center gap-1 flex-1 h-full">
               <AtSign className={inputIconStyle} />
               <input
-                className="outline-none bg-transparent flex-1 text-xs sm:text-base"
+                className="outline-none bg-transparent flex-1 text-xs sm:text-base placeholder:text-neutral-400 rounded-md pl-1 h-[95%]"
                 type="email"
                 id="guestEmail"
                 name="guestEmail"
@@ -334,20 +280,20 @@ export function Home() {
               preencha seus dados abaixo:
             </p>
           </div>
-          <div className="flex-center gap-2 w-full bg-neutral-950 px-4 py-2.5 rounded-lg h-14">
+          <div className="flex-center gap-1 w-full bg-neutral-950 px-4 py-2.5 rounded-lg h-14">
             <User className={inputIconStyle} />
             <input
-              className="outline-none bg-transparent flex-1 text-xs sm:text-base"
+              className="outline-none bg-transparent flex-1 text-xs sm:text-base placeholder:text-neutral-400 rounded-md pl-1 h-full"
               type="text"
               id="fullName"
               name="fullName"
               placeholder="Seu nome completo"
             />
           </div>
-          <div className="flex-center gap-2 w-full bg-neutral-950 px-4 py-2.5 rounded-lg h-14">
+          <div className="flex-center gap-1 w-full bg-neutral-950 px-4 py-2.5 rounded-lg h-14">
             <Mail className={inputIconStyle} />
             <input
-              className="outline-none bg-transparent flex-1 text-xs sm:text-base"
+              className="outline-none bg-transparent flex-1 text-xs sm:text-base placeholder:text-neutral-400 rounded-md pl-1 h-full"
               type="email"
               id="personalEmail"
               name="personalEmail"
