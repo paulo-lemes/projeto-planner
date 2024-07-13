@@ -1,9 +1,10 @@
 import { useEffect, FormEvent, useState } from "react";
 import { api } from "@/lib/axios";
-import { inputIconStyle } from "@/utils";
+import { inputIconStyle, inputModalStyle } from "@/utils";
 import { Button } from "../Button";
 import { Modal } from "../Modal";
 import { Link2, Plus, Tag } from "lucide-react";
+import { InputModalWrapper } from "../InputModalWrapper";
 
 interface ImportantLinksProps {
   tripId?: string;
@@ -102,24 +103,24 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
             </p>
           </div>
           <form onSubmit={handleCreateLink} className="space-y-2">
-            <div className="h-14 px-4 bg-neutral-950 border border-neutral-800 rounded-lg flex items-center gap-1">
+            <InputModalWrapper>
               <Tag className={inputIconStyle} />
               <input
                 name="title"
                 placeholder="Título do link"
-                className="bg-transparent text-lg placeholder-neutral-400 outline-none flex-1 rounded-md pl-1"
+                className={inputModalStyle}
               />
-            </div>
-            <div className="h-14 flex-1 px-4 bg-neutral-950 border border-neutral-800 rounded-lg flex items-center gap-1">
+            </InputModalWrapper>
+            <InputModalWrapper>
               <Link2 className={inputIconStyle} />
               <input
                 type="text"
                 name="url"
                 placeholder="URL"
-                className="bg-transparent text-lg placeholder-neutral-400 outline-none flex-1 rounded-md pl-1"
+                className={inputModalStyle}
               />
-            </div>
-            <Button type="submit" className="w-full">
+            </InputModalWrapper>
+            <Button type="submit" className="w-full !mt-4 h-11">
               Salvar atividade
             </Button>
           </form>
