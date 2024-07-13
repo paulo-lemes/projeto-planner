@@ -138,6 +138,7 @@ export function Activities({ tripId }: ActivitiesProps) {
             <InputModalWrapper>
               <input
                 type="datetime-local"
+                // min={"2024-10-01T00:00"}
                 name="occurs_at"
                 placeholder="Data e horário da atividade"
                 className={`${inputModalStyle} text-neutral-400 dark:[color-scheme:dark]`}

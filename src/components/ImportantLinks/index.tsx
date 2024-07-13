@@ -69,12 +69,21 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
                 </span>
                 <a
                   href={url}
+                  rel="noopener noreferrer"
+                  target="_blank"
                   className="block text-xs text-neutral-400 truncate hover:text-neutral-200"
                 >
                   {url}
                 </a>
               </div>
-              <Link2 className="text-neutral-400 size-5 shrink-0" />
+              <a
+                href={url}
+                rel="noopener noreferrer"
+                target="_blank"
+                className="text-neutral-400 hover:text-neutral-200"
+              >
+                <Link2 className="size-5 shrink-0" />
+              </a>
             </div>
           ))
         ) : (
