@@ -12,6 +12,7 @@ import { Button } from "../Button";
 import { Modal } from "../Modal";
 import { InputModalWrapper } from "../InputModalWrapper";
 import { InviteGuests } from "../InviteGuests";
+import { useInviteGuests } from "@/hooks/useInviteGuests";
 
 interface ParticipantsProps {
   tripId?: string;
@@ -28,9 +29,17 @@ export function Participants({ tripId }: ParticipantsProps) {
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [idGuestUpdateName, setIdGuestUpdateName] = useState("");
   const [changedParticipant, setChangedParticipant] = useState(0);
-  const [isInviteGuestsModalOpen, setIsInviteGuestsModalOpen] = useState(false);
   const [isEditNameModalOpen, setIsEditNameModalOpen] = useState(false);
-  const [guestList, setGuestList] = useState<string[]>([]);
+
+  const {
+    isInviteGuestsModalOpen,
+    openInviteGuestsModal,
+    closeInviteGuestsModal,
+    guestList,
+    setGuestList,
+    addGuestEmail,
+    deleteGuestEmail,
+  } = useInviteGuests();
 
   useEffect(() => {
     api
@@ -55,7 +64,7 @@ export function Participants({ tripId }: ParticipantsProps) {
     setIsEditNameModalOpen(true);
   };
 
-  const handleUpdateGuest = async (event: FormEvent<HTMLFormElement>) => {
+  const handleUpdateGuestName = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -77,35 +86,8 @@ export function Participants({ tripId }: ParticipantsProps) {
       setIdGuestUpdateName("");
     } catch (error) {
       console.log("Erro -" + error);
-      alert("Ocorreu um erro ao cadastrar o link. Tente novamente.");
+      alert("Ocorreu um erro ao atualizar o nome. Tente novamente.");
     }
-  };
-
-  const addGuestEmail = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const data = new FormData(event.currentTarget);
-    const email = data.get("guestEmail")?.toString();
-
-    if (!email) {
-      alert("Digite um e-mail válido");
-      return;
-    }
-
-    if (guestList.includes(email)) {
-      alert("E-mail digitado já está na lista");
-      return;
-    }
-
-    const newGuestList = [...guestList, email];
-    setGuestList(newGuestList);
-
-    event.currentTarget.reset();
-  };
-
-  const deleteGuestEmail = (selectedEmail: string) => {
-    const newGuestList = guestList.filter((email) => email !== selectedEmail);
-    setGuestList(newGuestList);
   };
 
   const handleInviteGuests = async () => {
@@ -116,7 +98,7 @@ export function Participants({ tripId }: ParticipantsProps) {
       console.log(response);
 
       setChangedParticipant((prev) => prev + 1);
-      setIsInviteGuestsModalOpen(false);
+      closeInviteGuestsModal();
       setGuestList([]);
     } catch (error) {
       console.log("Erro -" + error);
@@ -136,12 +118,11 @@ export function Participants({ tripId }: ParticipantsProps) {
               <div className="space-y-1.5">
                 <p className="block font-medium text-neutral-100 space-x-2">
                   <span>{name ?? `Convidado ${index}`}</span>
-
                   <button
                     title="editar nome"
                     onClick={() => openEditNameModal(id)}
                   >
-                    <Pencil className="size-4" />
+                    <Pencil className="size-3" />
                   </button>
                 </p>
                 <p className="block text-xs text-neutral-400 truncate">
@@ -169,13 +150,13 @@ export function Participants({ tripId }: ParticipantsProps) {
       <Button
         variant="secondary"
         className="w-full"
-        onClick={() => setIsInviteGuestsModalOpen(true)}
+        onClick={openInviteGuestsModal}
       >
         <UserPlus className={iconStyle} />
         Convidar
       </Button>
 
-      {/* Create link modal */}
+      {/* Edit guest name modal */}
       <Modal
         isModalOpen={isEditNameModalOpen}
         closeModal={() => setIsEditNameModalOpen(false)}
@@ -184,7 +165,7 @@ export function Participants({ tripId }: ParticipantsProps) {
           <h3 className="font-semibold text-lg">
             Alterar nome do participante
           </h3>
-          <form onSubmit={handleUpdateGuest} className="space-y-3">
+          <form onSubmit={handleUpdateGuestName} className="space-y-3">
             <InputModalWrapper>
               <User className={inputIconStyle} />
               <input
@@ -203,7 +184,7 @@ export function Participants({ tripId }: ParticipantsProps) {
       {/* Invite guests modal */}
       <Modal
         isModalOpen={isInviteGuestsModalOpen}
-        closeModal={() => setIsInviteGuestsModalOpen(false)}
+        closeModal={closeInviteGuestsModal}
       >
         <InviteGuests
           guestList={guestList}

@@ -10,17 +10,25 @@ import { useNavigate } from "react-router-dom";
 import { LocationAndDatesGroup } from "@/components/LocationAndDatesGroup";
 import { InputModalWrapper } from "@/components/InputModalWrapper";
 import { InviteGuests } from "@/components/InviteGuests";
+import { useInviteGuests } from "@/hooks/useInviteGuests";
 
 export function Home() {
   const [isInviteSectionOpen, setIsInviteSectionOpen] = useState(false);
-  const [isInviteGuestsModalOpen, setIsInviteGuestsModalOpen] = useState(false);
   const [isConfirmTripModalOpen, setIsConfirmTripModalOpen] = useState(false);
 
   const [destination, setDestination] = useState<string>("");
   const [tripStartAndEndDates, setTripStartAndEndDates] = useState<
     DateRange | undefined
   >();
-  const [guestList, setGuestList] = useState<string[]>([]);
+
+  const {
+    isInviteGuestsModalOpen,
+    openInviteGuestsModal,
+    closeInviteGuestsModal,
+    guestList,
+    addGuestEmail,
+    deleteGuestEmail,
+  } = useInviteGuests();
 
   const navigate = useNavigate();
 
@@ -28,33 +36,6 @@ export function Home() {
     destination && displayedDate
       ? setIsInviteSectionOpen(true)
       : alert("Preencha as informações de destino e período para prosseguir");
-  };
-
-  const addGuestEmail = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const data = new FormData(event.currentTarget);
-    const email = data.get("guestEmail")?.toString();
-
-    if (!email) {
-      alert("Digite um e-mail válido");
-      return;
-    }
-
-    if (guestList.includes(email)) {
-      alert("E-mail digitado já está na lista");
-      return;
-    }
-
-    const newGuestList = [...guestList, email];
-    setGuestList(newGuestList);
-
-    event.currentTarget.reset();
-  };
-
-  const deleteGuestEmail = (selectedEmail: string) => {
-    const newGuestList = guestList.filter((email) => email !== selectedEmail);
-    setGuestList(newGuestList);
   };
 
   const handleConfirmTrip = async (event: FormEvent<HTMLFormElement>) => {
@@ -141,7 +122,7 @@ export function Home() {
             <button
               type="button"
               className="flex items-center gap-2 sm:flex-1 text-left w-full sm:w-max"
-              onClick={() => setIsInviteGuestsModalOpen(true)}
+              onClick={openInviteGuestsModal}
             >
               <UserRoundPlus className={inputIconStyle} />
               {guestList.length > 0 ? (
@@ -186,7 +167,7 @@ export function Home() {
       {/* Invite guests modal */}
       <Modal
         isModalOpen={isInviteGuestsModalOpen}
-        closeModal={() => setIsInviteGuestsModalOpen(false)}
+        closeModal={closeInviteGuestsModal}
       >
         <InviteGuests
           guestList={guestList}
