@@ -5,7 +5,8 @@ import { FormEvent, useEffect, useState } from "react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Modal } from "../Modal";
-import { inputIconStyle } from "@/utils";
+import { inputIconStyle, inputModalStyle } from "@/utils";
+import { InputModalWrapper } from "../InputModalWrapper";
 
 interface ActivitiesProps {
   tripId?: string;
@@ -126,23 +127,23 @@ export function Activities({ tripId }: ActivitiesProps) {
             </p>
           </div>
           <form onSubmit={handleCreateActivity} className="space-y-2">
-            <div className="h-14 px-4 bg-neutral-950 border border-neutral-800 rounded-lg flex items-center gap-2">
+            <InputModalWrapper>
               <Tag className={inputIconStyle} />
               <input
                 name="title"
                 placeholder="Qual a atividade?"
-                className="bg-transparent text-lg placeholder-neutral-400 outline-none flex-1"
+                className={inputModalStyle}
               />
-            </div>
-            <div className="h-14 flex-1 px-4 bg-neutral-950 border border-neutral-800 rounded-lg flex items-center">
+            </InputModalWrapper>
+            <InputModalWrapper>
               <input
                 type="datetime-local"
                 name="occurs_at"
                 placeholder="Data e horário da atividade"
-                className="bg-transparent text-lg text-neutral-400 outline-none flex-1 dark:[color-scheme:dark]"
+                className={`${inputModalStyle} text-neutral-400 dark:[color-scheme:dark]`}
               />
-            </div>
-            <Button type="submit" className="w-full">
+            </InputModalWrapper>
+            <Button type="submit" className="w-full !mt-4 h-11">
               Salvar atividade
             </Button>
           </form>

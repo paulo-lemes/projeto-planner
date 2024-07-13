@@ -17,6 +17,7 @@ import { formatDisplayedDate, iconStyle, inputIconStyle } from "@/utils";
 import { api } from "@/lib/axios";
 import { useNavigate } from "react-router-dom";
 import { LocationAndDatesGroup } from "@/components/LocationAndDatesGroup";
+import { InputModalWrapper } from "@/components/InputModalWrapper";
 
 export function Home() {
   const [isInviteSectionOpen, setIsInviteSectionOpen] = useState(false);
@@ -268,7 +269,7 @@ export function Home() {
               preencha seus dados abaixo:
             </p>
           </div>
-          <div className="flex-center gap-1 w-full bg-neutral-950 px-4 py-2.5 rounded-lg h-14">
+          <InputModalWrapper>
             <User className={inputIconStyle} />
             <input
               className="outline-none bg-transparent flex-1 text-xs sm:text-base placeholder:text-neutral-400 rounded-md pl-1 h-full"
@@ -277,8 +278,8 @@ export function Home() {
               name="fullName"
               placeholder="Seu nome completo"
             />
-          </div>
-          <div className="flex-center gap-1 w-full bg-neutral-950 px-4 py-2.5 rounded-lg h-14">
+          </InputModalWrapper>
+          <InputModalWrapper>
             <Mail className={inputIconStyle} />
             <input
               className="outline-none bg-transparent flex-1 text-xs sm:text-base placeholder:text-neutral-400 rounded-md pl-1 h-full"
@@ -287,8 +288,8 @@ export function Home() {
               name="personalEmail"
               placeholder="Seu e-mail pessoal"
             />
-          </div>
-          <Button type="submit" className="w-full mt-1">
+          </InputModalWrapper>
+          <Button type="submit" className="w-full mt-2 h-11">
             Confirmar criação da viagem
           </Button>
         </form>
