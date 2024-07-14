@@ -4,10 +4,11 @@ import {
   Pencil,
   User,
   UserPlus,
+  UserX,
 } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import { api } from "@/lib/axios";
-import { iconStyle, inputIconStyle, inputModalStyle } from "@/utils";
+import { handleDelete, iconStyle, inputIconStyle, inputModalStyle } from "@/utils";
 import { Button } from "../Button";
 import { Modal } from "../Modal";
 import { InputModalWrapper } from "../InputModalWrapper";
@@ -116,8 +117,10 @@ export function Participants({ tripId }: ParticipantsProps) {
           participants.map(({ id, name, email, is_confirmed }, index) => (
             <div key={id} className="flex items-center justify-between gap-4">
               <div className="space-y-1.5">
-                <p className="block font-medium text-neutral-100 space-x-2">
-                  <span>{name ?? `Convidado ${index}`}</span>
+                <p className="flex font-medium text-neutral-100 space-x-2">
+                  <span className="truncate">
+                    {name ?? `Convidado ${index}`}
+                  </span>
                   <button
                     title="editar nome"
                     onClick={() => openEditNameModal(id)}
@@ -129,16 +132,31 @@ export function Participants({ tripId }: ParticipantsProps) {
                   {email}
                 </p>
               </div>
-              {is_confirmed ? (
-                <CircleCheck className="text-primary-400 size-5 shrink-0" />
-              ) : (
+              <div className="shrink-0 flex gap-2">
+                {is_confirmed ? (
+                  <CircleCheck className="text-primary-400 size-5 shrink-0" />
+                ) : (
+                  <button
+                    type="button"
+                    title="confirmar participante"
+                    onClick={() => handleParticipantConfirm(id)}
+                  >
+                    <CircleDashed className="text-neutral-400 size-5 shrink-0" />
+                  </button>
+                )}
                 <button
                   type="button"
-                  onClick={() => handleParticipantConfirm(id)}
+                  title="remover participante"
+                  onClick={() =>
+                    handleDelete("participants", id, () =>
+                      setChangedParticipant((prev) => prev + 1)
+                    )
+                  }
+                  className="text-neutral-400 hover:text-neutral-200"
                 >
-                  <CircleDashed className="text-neutral-400 size-5 shrink-0" />
+                  <UserX className={iconStyle} />
                 </button>
-              )}
+              </div>
             </div>
           ))
         ) : (

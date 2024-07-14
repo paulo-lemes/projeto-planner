@@ -1,9 +1,14 @@
+import {
+  handleDelete,
+  iconStyle,
+  inputIconStyle,
+  inputModalStyle,
+} from "@/utils";
 import { useEffect, FormEvent, useState } from "react";
 import { api } from "@/lib/axios";
-import { inputIconStyle, inputModalStyle } from "@/utils";
 import { Button } from "../Button";
 import { Modal } from "../Modal";
-import { Link2, Plus, Tag } from "lucide-react";
+import { Link2, Plus, Tag, Trash2 } from "lucide-react";
 import { InputModalWrapper } from "../InputModalWrapper";
 
 interface ImportantLinksProps {
@@ -76,14 +81,29 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
                   {url}
                 </a>
               </div>
-              <a
-                href={url}
-                rel="noopener noreferrer"
-                target="_blank"
-                className="text-neutral-400 hover:text-neutral-200"
-              >
-                <Link2 className="size-5 shrink-0" />
-              </a>
+              <div className="shrink-0 flex gap-2">
+                <a
+                  href={url}
+                  title={`link para ${title}`}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  className="text-neutral-400 hover:text-neutral-200"
+                >
+                  <Link2 className={iconStyle} />
+                </a>
+                <button
+                  type="button"
+                  title="deletar link"
+                  onClick={() =>
+                    handleDelete("links", id, () =>
+                      setCreatedLink((prev) => prev + 1)
+                    )
+                  }
+                  className="text-neutral-400 hover:text-neutral-200"
+                >
+                  <Trash2 className={iconStyle} />
+                </button>
+              </div>
             </div>
           ))
         ) : (
