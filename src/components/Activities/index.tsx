@@ -1,15 +1,18 @@
-import { CircleCheck, Plus, Tag } from "lucide-react";
-import { Button } from "../Button";
-import { api } from "@/lib/axios";
 import { FormEvent, useEffect, useState } from "react";
+import { CircleCheck, Plus, Tag } from "lucide-react";
+import { api } from "@/lib/axios";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { Button } from "../Button";
 import { Modal } from "../Modal";
-import { inputIconStyle, inputModalStyle } from "@/utils";
 import { InputModalWrapper } from "../InputModalWrapper";
+import { inputIconStyle, inputModalStyle } from "@/utils";
+import { DateRange } from "react-day-picker";
 
 interface ActivitiesProps {
   tripId?: string;
+  tripStartAndEndDates: DateRange | undefined;
+  changedTripDates: number;
 }
 
 interface Activity {
@@ -21,7 +24,11 @@ interface Activity {
   }[];
 }
 
-export function Activities({ tripId }: ActivitiesProps) {
+export function Activities({
+  tripId,
+  tripStartAndEndDates,
+  changedTripDates,
+}: ActivitiesProps) {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [createdActivity, setCreatedActivity] = useState(0);
   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] =
@@ -31,7 +38,7 @@ export function Activities({ tripId }: ActivitiesProps) {
     api
       .get(`trips/${tripId}/activities`)
       .then((response) => setActivities(response.data.activities));
-  }, [tripId, createdActivity]);
+  }, [tripId, createdActivity, changedTripDates]);
 
   const handleCreateActivity = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -138,7 +145,8 @@ export function Activities({ tripId }: ActivitiesProps) {
             <InputModalWrapper>
               <input
                 type="datetime-local"
-                // min={"2024-10-01T00:00"}
+                min={tripStartAndEndDates?.from?.toString().slice(0, 16)}
+                max={tripStartAndEndDates?.to?.toString().slice(0, 16)}
                 name="occurs_at"
                 placeholder="Data e horário da atividade"
                 className={`${inputModalStyle} text-neutral-400 dark:[color-scheme:dark]`}

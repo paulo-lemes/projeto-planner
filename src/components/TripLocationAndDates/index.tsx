@@ -1,23 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { api } from "@/lib/axios";
 import { InputGroupWrapper } from "../InputGroupWrapper";
 import { LocationAndDatesGroup } from "../LocationAndDatesGroup";
 import { Button } from "../Button";
 import { DateRange } from "react-day-picker";
-import { formatDisplayedDate, iconStyle } from "@/utils";
+import { iconStyle } from "@/utils";
 import { Pencil, Settings2 } from "lucide-react";
 
 interface TripLocationAndDatesProps {
   tripId?: string;
+  destination: string;
+  setDestination: (value: string) => void;
+  tripStartAndEndDates: DateRange | undefined;
+  setTripStartAndEndDates: (value: DateRange | undefined) => void;
+  displayedDate: string | null;
+  isLocationAndDatesDisabled: boolean;
+  enableLocationAndDates: () => void;
+  disableLocationAndDates: () => void;
+  changedTripDates: number;
+  setChangedTripDates: (value: number) => void;
 }
 
-export function TripLocationAndDates({ tripId }: TripLocationAndDatesProps) {
-  const [destination, setDestination] = useState("");
-  const [isLocationAndDatesDisabled, setIsLocationAndDatesDisabled] =
-    useState(true);
-  const [tripStartAndEndDates, setTripStartAndEndDates] = useState<
-    DateRange | undefined
-  >();
+export function TripLocationAndDates(props: TripLocationAndDatesProps) {
+  const {
+    tripId,
+    destination,
+    setDestination,
+    tripStartAndEndDates,
+    setTripStartAndEndDates,
+    isLocationAndDatesDisabled,
+    enableLocationAndDates,
+    disableLocationAndDates,
+    displayedDate,
+    changedTripDates,
+    setChangedTripDates,
+  } = props;
 
   useEffect(() => {
     api.get(`trips/${tripId}`).then((response) => {
@@ -53,24 +70,21 @@ export function TripLocationAndDates({ tripId }: TripLocationAndDatesProps) {
       });
       console.log(response);
 
-      setIsLocationAndDatesDisabled(true);
+      disableLocationAndDates();
+      setTimeout(() => {
+        setChangedTripDates(changedTripDates + 1);
+      }, 500);
     } catch (error) {
       console.log("Erro -" + error);
       alert("Ocorreu um erro ao criar a viagem. Tente novamente.");
     }
   };
 
-  const displayedDate = formatDisplayedDate(tripStartAndEndDates);
-
   return (
     <InputGroupWrapper classCSS="min-w-full">
       <LocationAndDatesGroup
-        destination={destination}
-        setDestination={setDestination}
+        {...props}
         isInputsDisabled={isLocationAndDatesDisabled}
-        tripStartAndEndDates={tripStartAndEndDates}
-        setTripStartAndEndDates={setTripStartAndEndDates}
-        displayedDate={displayedDate}
       />
       {!isLocationAndDatesDisabled ? (
         <Button
@@ -85,7 +99,7 @@ export function TripLocationAndDates({ tripId }: TripLocationAndDatesProps) {
         <Button
           variant="secondary"
           type="button"
-          onClick={() => setIsLocationAndDatesDisabled(false)}
+          onClick={enableLocationAndDates}
           className="w-full sm:w-max"
         >
           Alterar local/data
