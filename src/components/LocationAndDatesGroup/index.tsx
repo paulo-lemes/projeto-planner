@@ -30,7 +30,7 @@ export function LocationAndDatesGroup({
       <div className="flex-center gap-1 w-full mt-1.5 sm:mt-0 sm:w-max sm:flex-1">
         <MapPin className={inputIconStyle} />
         <input
-          className="outline-none bg-transparent flex-1 placeholder:text-neutral-400 rounded-md pl-1 h-[90%]"
+          className="outline-none bg-transparent flex-1 placeholder:text-neutral-400 rounded-md pl-1 h-[90%] disabled:text-neutral-300"
           type="text"
           id="location"
           name="location"
@@ -43,17 +43,16 @@ export function LocationAndDatesGroup({
       <button
         disabled={isInputsDisabled}
         onClick={() => setIsDatePickerModalOpen(true)}
-        className="flex items-center gap-2 text-left w-full sm:w-max sm:min-w-28 lg:min-w-36"
+        className={`flex items-center gap-2 text-left w-full sm:w-max sm:min-w-28 lg:min-w-36 ${
+          displayedDate
+            ? "text-neutral-100 disabled:text-neutral-300"
+            : "text-neutral-400"
+        }`}
       >
         <Calendar className={inputIconStyle} />
-        <span
-          className={`w-max shrink-0 ${
-            displayedDate ? "text-neutral-100" : "text-neutral-400"
-          }`}
-        >
-          {displayedDate || "Quando?"}
-        </span>
+        <span className={`w-max shrink-0`}>{displayedDate || "Quando?"}</span>
       </button>
+
       {/* Date picker modal */}
       <Modal
         isModalOpen={isDatePickerModalOpen}
@@ -89,6 +88,7 @@ export function LocationAndDatesGroup({
           </Button>
         )}
       </Modal>
+
       <div className="hidden sm:block w-px h-6 sm:mx-3 bg-neutral-800 self-center" />
     </>
   );
