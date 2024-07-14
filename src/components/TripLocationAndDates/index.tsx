@@ -17,8 +17,7 @@ interface TripLocationAndDatesProps {
   isLocationAndDatesDisabled: boolean;
   enableLocationAndDates: () => void;
   disableLocationAndDates: () => void;
-  changedTripDates: number;
-  setChangedTripDates: (value: number) => void;
+  updateChangedTripDates: () => void;
 }
 
 export function TripLocationAndDates(props: TripLocationAndDatesProps) {
@@ -31,9 +30,7 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
     isLocationAndDatesDisabled,
     enableLocationAndDates,
     disableLocationAndDates,
-    displayedDate,
-    changedTripDates,
-    setChangedTripDates,
+    updateChangedTripDates,
   } = props;
 
   useEffect(() => {
@@ -72,7 +69,7 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
 
       disableLocationAndDates();
       setTimeout(() => {
-        setChangedTripDates(changedTripDates + 1);
+        updateChangedTripDates();
       }, 500);
     } catch (error) {
       console.log("Erro -" + error);

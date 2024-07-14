@@ -8,7 +8,12 @@ import {
 } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import { api } from "@/lib/axios";
-import { handleDelete, iconStyle, inputIconStyle, inputModalStyle } from "@/utils";
+import {
+  handleDelete,
+  iconStyle,
+  inputIconStyle,
+  inputModalStyle,
+} from "@/utils";
 import { Button } from "../Button";
 import { Modal } from "../Modal";
 import { InputModalWrapper } from "../InputModalWrapper";
@@ -141,7 +146,7 @@ export function Participants({ tripId }: ParticipantsProps) {
                     title="confirmar participante"
                     onClick={() => handleParticipantConfirm(id)}
                   >
-                    <CircleDashed className="text-neutral-400 size-5 shrink-0" />
+                    <CircleDashed className="text-neutral-400 hover:text-neutral-200 size-5 shrink-0" />
                   </button>
                 )}
                 <button

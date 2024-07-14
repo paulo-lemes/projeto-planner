@@ -20,6 +20,10 @@ export function useLocationAndDates(tripId?: string) {
     setIsLocationAndDatesDisabled(true);
   };
 
+  const updateChangedTripDates = () => {
+    setChangedTripDates((prev) => prev + 1);
+  };
+
   useEffect(() => {
     if (tripId)
       api.get(`trips/${tripId}`).then((response) => {
@@ -41,6 +45,6 @@ export function useLocationAndDates(tripId?: string) {
     enableLocationAndDates,
     disableLocationAndDates,
     changedTripDates,
-    setChangedTripDates,
+    updateChangedTripDates,
   };
 }
