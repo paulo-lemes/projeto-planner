@@ -1,12 +1,17 @@
+import {
+  handleDelete,
+  iconStyle,
+  inputIconStyle,
+  inputModalStyle,
+} from "@/utils";
 import { FormEvent, useEffect, useState } from "react";
-import { CircleCheck, Plus, Tag } from "lucide-react";
+import { CircleCheck, Plus, Tag, Trash2 } from "lucide-react";
 import { api } from "@/lib/axios";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Button } from "../Button";
 import { Modal } from "../Modal";
 import { InputModalWrapper } from "../InputModalWrapper";
-import { inputIconStyle, inputModalStyle } from "@/utils";
 import { DateRange } from "react-day-picker";
 
 interface ActivitiesProps {
@@ -102,11 +107,30 @@ export function Activities({
                         key={id}
                         className="px-4 py-2.5 bg-neutral-900 rounded-xl shadow-shape flex items-center gap-3"
                       >
-                        <CircleCheck className="size-5 text-primary-300" />
-                        <span className="text-neutral-100">{title}</span>
-                        <span className="text-neutral-400 text-sm ml-auto">
-                          {format(occurs_at, "HH:mm")}h
+                        <CircleCheck className="size-5 text-primary-300 shrink-0" />
+                        <span
+                          className="text-neutral-100 truncate"
+                          title={title}
+                        >
+                          {title}
                         </span>
+                        <div className="ml-auto flex shrink-0 gap-2">
+                          <span className="text-neutral-400 text-sm">
+                            {format(occurs_at, "HH:mm")}h
+                          </span>
+                          <button
+                            type="button"
+                            title="deletar atividade"
+                            onClick={() =>
+                              handleDelete("activities", id, () =>
+                                setCreatedActivity((prev) => prev + 1)
+                              )
+                            }
+                            className="text-neutral-400 hover:text-neutral-200"
+                          >
+                            <Trash2 className={iconStyle} />
+                          </button>
+                        </div>
                       </div>
                     );
                   })}
