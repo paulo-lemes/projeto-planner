@@ -1,15 +1,13 @@
 import { useDialog } from "@/hooks/useDialog";
-import { useNavigate } from "react-router-dom";
 import { Button } from "../Button";
 
 export function Dialog() {
   const { isDialogOpen, closeDialog, dialogText, redirectAfterClose } =
     useDialog();
-  const navigate = useNavigate();
 
   const handleCloseDialog = () => {
     closeDialog();
-    if (redirectAfterClose) navigate(redirectAfterClose);
+    if (redirectAfterClose) window.location.href = redirectAfterClose
   };
 
   const isLoading = dialogText === "loading";

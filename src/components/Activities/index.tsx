@@ -13,6 +13,7 @@ import { Button } from "../Button";
 import { Modal } from "../Modal";
 import { InputModalWrapper } from "../InputModalWrapper";
 import { DateRange } from "react-day-picker";
+import { useDialog } from "@/hooks/useDialog";
 
 interface ActivitiesProps {
   tripId?: string;
@@ -39,6 +40,8 @@ export function Activities({
   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] =
     useState(false);
 
+  const { openDialog, closeDialog } = useDialog();
+
   useEffect(() => {
     api
       .get(`trips/${tripId}/activities`)
@@ -53,10 +56,11 @@ export function Activities({
     const occurs_at = data.get("occurs_at")?.toString();
 
     if (!title || !occurs_at) {
-      alert("Preencha os campos para criar a atividade");
+      openDialog("Preencha os campos para criar a atividade");
       return;
     }
 
+    openDialog("loading");
     try {
       const response = await api.post(`/trips/${tripId}/activities`, {
         occurs_at,
@@ -64,11 +68,13 @@ export function Activities({
       });
       console.log(response);
 
+      closeDialog();
       setCreatedActivity((prev) => prev + 1);
       setIsCreateActivityModalOpen(false);
+      openDialog("Atividade cadastrada com sucesso!");
     } catch (error) {
       console.log("Erro -" + error);
-      alert("Ocorreu um erro ao cadastrar a atividade. Tente novamente.");
+      openDialog("Ocorreu um erro ao cadastrar a atividade");
     }
   };
 
@@ -122,8 +128,14 @@ export function Activities({
                             type="button"
                             title="deletar atividade"
                             onClick={() =>
-                              handleDelete("activities", id, () =>
-                                setCreatedActivity((prev) => prev + 1)
+                              handleDelete(
+                                "activities",
+                                id,
+                                () => setCreatedActivity((prev) => prev + 1),
+                                () =>
+                                  openDialog(
+                                    "Ocorreu um erro ao deletar a atividade"
+                                  )
                               )
                             }
                             className="text-neutral-400 hover:text-neutral-200"

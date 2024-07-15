@@ -6,6 +6,7 @@ import { Button } from "../Button";
 import { DateRange } from "react-day-picker";
 import { iconStyle } from "@/utils";
 import { Pencil, Settings2 } from "lucide-react";
+import { useDialog } from "@/hooks/useDialog";
 
 interface TripLocationAndDatesProps {
   tripId?: string;
@@ -32,6 +33,7 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
     disableLocationAndDates,
     updateChangedTripDates,
   } = props;
+  const { openDialog, closeDialog } = useDialog();
 
   useEffect(() => {
     api.get(`trips/${tripId}`).then((response) => {
@@ -39,12 +41,12 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
       setDestination(trip.destination);
       setTripStartAndEndDates({ from: trip.starts_at, to: trip.ends_at });
     });
-  }, [tripId]);
+  }, [tripId, setDestination, setTripStartAndEndDates]);
 
   const handleLocationAndDatesChange = async () => {
     if (!destination) {
-      alert(
-        "Erro ao processar a alteração: informação de destino deve conter pelo menos 4 caracteres."
+      openDialog(
+        "Erro ao processar a alteração: informação de destino deve conter pelo menos 4 caracteres"
       );
       return;
     }
@@ -53,12 +55,13 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
       !tripStartAndEndDates.from ||
       !tripStartAndEndDates.to
     ) {
-      alert(
-        "Erro ao processar a alteração: informação de período deve conter data de início e fim da viagem."
+      openDialog(
+        "Erro ao processar a alteração: informação de período deve conter data de início e fim da viagem"
       );
       return;
     }
 
+    openDialog("loading");
     try {
       const response = await api.put(`/trips/${tripId}`, {
         destination,
@@ -71,9 +74,11 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
       setTimeout(() => {
         updateChangedTripDates();
       }, 500);
+      closeDialog();
+      openDialog("Informações alteradas com sucesso!");
     } catch (error) {
       console.log("Erro -" + error);
-      alert("Ocorreu um erro ao criar a viagem. Tente novamente.");
+      openDialog("Ocorreu um erro ao alterar as informações da viagem");
     }
   };
 

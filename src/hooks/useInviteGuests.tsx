@@ -1,8 +1,11 @@
 import { FormEvent, useState } from "react";
+import { useDialog } from "./useDialog";
 
 export function useInviteGuests() {
   const [isInviteGuestsModalOpen, setIsInviteGuestsModalOpen] = useState(false);
   const [guestList, setGuestList] = useState<string[]>([]);
+
+  const { openDialog } = useDialog();
 
   const openInviteGuestsModal = () => {
     setIsInviteGuestsModalOpen(true)
@@ -19,12 +22,12 @@ export function useInviteGuests() {
     const email = data.get("guestEmail")?.toString();
 
     if (!email) {
-      alert("Digite um e-mail válido");
+      openDialog("Digite um e-mail válido");
       return;
     }
 
     if (guestList.includes(email)) {
-      alert("E-mail digitado já está na lista");
+      openDialog("E-mail digitado já está na lista");
       return;
     }
 
