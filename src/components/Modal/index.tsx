@@ -25,7 +25,7 @@ export function Modal({ isModalOpen, children, closeModal }: ModalProps) {
           className="modal-overlay fixed inset-0 z-40 bg-black/60"
           onClick={closeModal}
         />
-        <div className="modal-container max-w-full p-5 flex-center z-50">
+        <div className="modal-container max-w-full p-5 flex-center z-50 animate-fade-in">
           <div className="relative bg-neutral-900 py-5 px-6 rounded-xl shadow-shape">
             <button
               type="button"

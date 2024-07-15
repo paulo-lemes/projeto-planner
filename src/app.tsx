@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { DefaultLayout } from "./pages/layouts/DefaultLayout";
 import { Home } from "@/pages/Home";
 import { TripDetails } from "./pages/TripDetails";
+import { DialogProvider } from "./contexts/DialogContext";
 
 const router = createBrowserRouter([
   {
@@ -21,5 +22,9 @@ const router = createBrowserRouter([
 ]);
 
 export function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <DialogProvider>
+      <RouterProvider router={router} />
+    </DialogProvider>
+  );
 }
