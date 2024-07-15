@@ -10,6 +10,7 @@ import { Button } from "../Button";
 import { Modal } from "../Modal";
 import { Link2, Plus, Tag, Trash2 } from "lucide-react";
 import { InputModalWrapper } from "../InputModalWrapper";
+import { useDialog } from "@/hooks/useDialog";
 
 interface ImportantLinksProps {
   tripId?: string;
@@ -26,6 +27,8 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
   const [createdLink, setCreatedLink] = useState(0);
   const [isCreateLinkModalOpen, setIsCreateLinkModalOpen] = useState(false);
 
+  const { openDialog, closeDialog } = useDialog();
+
   useEffect(() => {
     api
       .get(`trips/${tripId}/links`)
@@ -40,10 +43,11 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
     const url = data.get("url")?.toString();
 
     if (!title || !url) {
-      alert("Preencha os campos para criar o link");
+      openDialog("Preencha os campos para criar o link");
       return;
     }
 
+    openDialog("loading")
     try {
       const response = await api.post(`/trips/${tripId}/links`, {
         url,
@@ -51,11 +55,13 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
       });
       console.log(response);
 
+      closeDialog()
       setCreatedLink((prev) => prev + 1);
       setIsCreateLinkModalOpen(false);
+      openDialog("Link cadastrado com sucesso!")
     } catch (error) {
       console.log("Erro -" + error);
-      alert("Ocorreu um erro ao cadastrar o link. Tente novamente.");
+      openDialog("Ocorreu um erro ao cadastrar o link");
     }
   };
 
@@ -95,8 +101,11 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
                   type="button"
                   title="deletar link"
                   onClick={() =>
-                    handleDelete("links", id, () =>
-                      setCreatedLink((prev) => prev + 1)
+                    handleDelete(
+                      "links",
+                      id,
+                      () => setCreatedLink((prev) => prev + 1),
+                      () => openDialog("Ocorreu um erro ao deletar o link")
                     )
                   }
                   className="text-neutral-400 hover:text-neutral-200"

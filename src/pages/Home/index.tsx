@@ -6,21 +6,21 @@ import { Button } from "@/components/Button";
 import { Modal } from "@/components/Modal";
 import { formatDisplayedDate, iconStyle, inputIconStyle } from "@/utils";
 import { api } from "@/lib/axios";
-import { useNavigate } from "react-router-dom";
 import { LocationAndDatesGroup } from "@/components/LocationAndDatesGroup";
 import { InputModalWrapper } from "@/components/InputModalWrapper";
 import { InviteGuests } from "@/components/InviteGuests";
 import { useInviteGuests } from "@/hooks/useInviteGuests";
+import { useDialog } from "@/hooks/useDialog";
 
 export function Home() {
   const [isInviteSectionOpen, setIsInviteSectionOpen] = useState(false);
   const [isConfirmTripModalOpen, setIsConfirmTripModalOpen] = useState(false);
-
   const [destination, setDestination] = useState<string>("");
   const [tripStartAndEndDates, setTripStartAndEndDates] = useState<
     DateRange | undefined
   >();
 
+  const { openDialog, closeDialog, setRedirectAfterClose } = useDialog();
   const {
     isInviteGuestsModalOpen,
     openInviteGuestsModal,
@@ -30,12 +30,12 @@ export function Home() {
     deleteGuestEmail,
   } = useInviteGuests();
 
-  const navigate = useNavigate();
-
   const openInviteSection = () => {
     destination && displayedDate
       ? setIsInviteSectionOpen(true)
-      : alert("Preencha as informações de destino e período para prosseguir");
+      : openDialog(
+          "Preencha as informações de destino e período para prosseguir"
+        );
   };
 
   const handleConfirmTrip = async (event: FormEvent<HTMLFormElement>) => {
@@ -46,10 +46,11 @@ export function Home() {
     const personalEmail = data.get("personalEmail")?.toString();
 
     if (!fullName || !personalEmail || !tripStartAndEndDates) {
-      alert("Preencha os campos para criar a viagem");
+      openDialog("Preencha os campos para criar a viagem");
       return;
     }
 
+    openDialog("loading");
     try {
       const response = await api.post("/trips", {
         destination,
@@ -61,12 +62,17 @@ export function Home() {
       });
 
       console.log(response);
-      const { tripId } = response.data;
+      const { emailLink } = response.data;
 
-      navigate(`/trips/${tripId}`);
+      closeDialog();
+      setRedirectAfterClose(emailLink);
+      openDialog(
+        "Viagem criada com sucesso! Você será redirecionado para realizar a confirmação por e-mail"
+      );
     } catch (error) {
       console.log("Erro -" + error);
-      alert("Ocorreu um erro ao criar a viagem. Tente novamente.");
+      closeDialog();
+      openDialog("Ocorreu um erro ao criar a viagem");
     }
   };
 

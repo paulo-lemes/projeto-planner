@@ -160,8 +160,11 @@ export function Participants({ tripId }: ParticipantsProps) {
                   type="button"
                   title="remover participante"
                   onClick={() =>
-                    handleDelete("participants", id, () =>
-                      setChangedParticipant((prev) => prev + 1)
+                    handleDelete(
+                      "participants",
+                      id,
+                      () => setChangedParticipant((prev) => prev + 1),
+                      () => openDialog("Ocorreu um erro ao remover o participante")
                     )
                   }
                   className="text-neutral-400 hover:text-neutral-200"

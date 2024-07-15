@@ -18,7 +18,8 @@ export function formatDisplayedDate(dates: DateRange | undefined) {
 export const handleDelete = async (
   path: string,
   id: string,
-  callback: () => void
+  callback: () => void,
+  errorCallback: () => void
 ) => {
   try {
     const response = await api.delete(`/${path}/${id}`);
@@ -27,6 +28,6 @@ export const handleDelete = async (
     callback();
   } catch (error) {
     console.log("Erro -" + error);
-    alert("Ocorreu um erro ao deletar o link. Tente novamente.");
+    errorCallback();
   }
 };
