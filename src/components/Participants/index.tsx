@@ -19,6 +19,7 @@ import { Modal } from "../Modal";
 import { InputModalWrapper } from "../InputModalWrapper";
 import { InviteGuests } from "../InviteGuests";
 import { useInviteGuests } from "@/hooks/useInviteGuests";
+import { useDialog } from "@/hooks/useDialog";
 
 interface ParticipantsProps {
   tripId?: string;
@@ -46,6 +47,7 @@ export function Participants({ tripId }: ParticipantsProps) {
     addGuestEmail,
     deleteGuestEmail,
   } = useInviteGuests();
+  const { openDialog, closeDialog } = useDialog();
 
   useEffect(() => {
     api
@@ -61,7 +63,7 @@ export function Participants({ tripId }: ParticipantsProps) {
       setChangedParticipant((prev) => prev + 1);
     } catch (error) {
       console.log("Erro -" + error);
-      alert("Ocorreu um erro ao confirmar o participante. Tente novamente.");
+      openDialog("Ocorreu um erro ao confirmar o participante");
     }
   };
 
@@ -77,7 +79,7 @@ export function Participants({ tripId }: ParticipantsProps) {
     const name = data.get("name")?.toString();
 
     if (!name) {
-      alert("Preencha o campo para alterar o nome.");
+      openDialog("Preencha o campo para alterar o nome");
       return;
     }
 
@@ -90,13 +92,15 @@ export function Participants({ tripId }: ParticipantsProps) {
       setChangedParticipant((prev) => prev + 1);
       setIsEditNameModalOpen(false);
       setIdGuestUpdateName("");
+      openDialog("Nome alterado com sucesso!");
     } catch (error) {
       console.log("Erro -" + error);
-      alert("Ocorreu um erro ao atualizar o nome. Tente novamente.");
+      openDialog("Ocorreu um erro ao atualizar o nome");
     }
   };
 
   const handleInviteGuests = async () => {
+    openDialog("loading");
     try {
       const response = await api.post(`/trips/${tripId}/invites`, {
         emails_to_invite: guestList,
@@ -106,9 +110,12 @@ export function Participants({ tripId }: ParticipantsProps) {
       setChangedParticipant((prev) => prev + 1);
       closeInviteGuestsModal();
       setGuestList([]);
+      closeDialog();
+      openDialog("Convite(s) enviado(s) por e-mail com sucesso!");
     } catch (error) {
+      closeDialog();
       console.log("Erro -" + error);
-      alert("Ocorreu um erro ao cadastrar o link. Tente novamente.");
+      openDialog("Ocorreu um erro ao convidar");
     }
   };
 

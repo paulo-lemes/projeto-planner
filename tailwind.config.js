@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const colors = require("tailwindcss/colors");
+import colors from "tailwindcss/colors"
 
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -18,6 +18,20 @@ export default {
       },
       backgroundImage: {
         pattern: "url(/pattern-bg.png)",
+      },
+      keyframes: {
+        "spin-slow": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "100%" },
+        },
+      },
+      animation: {
+        "spin-slow": "spin-slow 2s linear infinite",
+        "fade-in": "fade-in 0.3s ease-out",
       },
     },
   },
