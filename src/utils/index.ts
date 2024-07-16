@@ -15,6 +15,23 @@ export function formatDisplayedDate(dates: DateRange | undefined) {
     : null;
 }
 
+export function formatDates(dates: DateRange | undefined) {
+  const dateToLocaleString = (dateStr: Date) => {
+    const date = new Date(dateStr);
+    const pad = (num: number) => num.toString().padStart(2, "0");
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
+      date.getDate()
+    )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  };
+
+  if (dates && dates.from && dates.to) {
+    const localStartDate = dateToLocaleString(dates.from);
+    const localEndDate = dateToLocaleString(dates.to);
+
+    return { min: localStartDate, max: localEndDate };
+  }
+}
+
 export const handleDelete = async (
   path: string,
   id: string,

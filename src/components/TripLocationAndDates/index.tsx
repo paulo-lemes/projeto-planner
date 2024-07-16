@@ -66,7 +66,7 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
       const response = await api.put(`/trips/${tripId}`, {
         destination,
         starts_at: tripStartAndEndDates.from,
-        ends_at: tripStartAndEndDates.to,
+        ends_at: tripStartAndEndDates.to.setHours(23, 59, 0, 0),
       });
       console.log(response);
 

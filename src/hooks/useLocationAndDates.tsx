@@ -31,7 +31,7 @@ export function useLocationAndDates(tripId?: string) {
         setDestination(trip.destination);
         setTripStartAndEndDates({ from: trip.starts_at, to: trip.ends_at });
       });
-  }, [tripId]);
+  }, [tripId, changedTripDates]);
 
   const displayedDate = formatDisplayedDate(tripStartAndEndDates);
 

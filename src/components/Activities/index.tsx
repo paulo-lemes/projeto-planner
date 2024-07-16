@@ -1,4 +1,5 @@
 import {
+  formatDates,
   handleDelete,
   iconStyle,
   inputIconStyle,
@@ -77,6 +78,8 @@ export function Activities({
       openDialog("Ocorreu um erro ao cadastrar a atividade");
     }
   };
+
+  const formattedDates = formatDates(tripStartAndEndDates);
 
   return (
     <div className="flex flex-col gap-6">
@@ -181,8 +184,8 @@ export function Activities({
             <InputModalWrapper>
               <input
                 type="datetime-local"
-                min={tripStartAndEndDates?.from?.toString().slice(0, 16)}
-                max={tripStartAndEndDates?.to?.toString().slice(0, 16)}
+                min={formattedDates?.min}
+                max={formattedDates?.max}
                 name="occurs_at"
                 placeholder="Data e horário da atividade"
                 className={`${inputModalStyle} text-neutral-400 dark:[color-scheme:dark]`}

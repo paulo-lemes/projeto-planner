@@ -45,17 +45,28 @@ export function Home() {
     const fullName = data.get("fullName")?.toString();
     const personalEmail = data.get("personalEmail")?.toString();
 
-    if (!fullName || !personalEmail || !tripStartAndEndDates) {
+    if (
+      !fullName ||
+      !personalEmail ||
+      !tripStartAndEndDates ||
+      !tripStartAndEndDates.from ||
+      !tripStartAndEndDates.to
+    ) {
       openDialog("Preencha os campos para criar a viagem");
       return;
     }
+
+    const startDate =
+      tripStartAndEndDates.from.getDate() === new Date().getDate()
+        ? tripStartAndEndDates.from.setTime(new Date().getTime() + 10)
+        : tripStartAndEndDates.from;
 
     openDialog("loading");
     try {
       const response = await api.post("/trips", {
         destination,
-        starts_at: tripStartAndEndDates.from,
-        ends_at: tripStartAndEndDates.to,
+        starts_at: startDate,
+        ends_at: tripStartAndEndDates.to.setHours(23, 59, 0, 0),
         emails_to_invite: guestList,
         owner_name: fullName,
         owner_email: personalEmail,
