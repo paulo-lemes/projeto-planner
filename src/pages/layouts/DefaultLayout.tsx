@@ -7,5 +7,5 @@ export function DefaultLayout() {
       <Outlet />
       <Dialog />
     </>
-  )
+  );
 }

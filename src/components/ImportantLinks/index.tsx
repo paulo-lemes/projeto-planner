@@ -1,16 +1,16 @@
+import { useDialog } from "@/hooks/useDialog";
+import { api } from "@/lib/axios";
 import {
   handleDelete,
   iconStyle,
   inputIconStyle,
   inputModalStyle,
 } from "@/utils";
-import { useEffect, FormEvent, useState } from "react";
-import { api } from "@/lib/axios";
-import { Button } from "../Button";
-import { Modal } from "../Modal";
 import { Link2, Plus, Tag, Trash2 } from "lucide-react";
+import { FormEvent, useEffect, useState } from "react";
+import { Button } from "../Button";
 import { InputModalWrapper } from "../InputModalWrapper";
-import { useDialog } from "@/hooks/useDialog";
+import { Modal } from "../Modal";
 
 interface ImportantLinksProps {
   tripId?: string;
@@ -47,7 +47,7 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
       return;
     }
 
-    openDialog("loading")
+    openDialog("loading");
     try {
       const response = await api.post(`/trips/${tripId}/links`, {
         url,
@@ -55,10 +55,10 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
       });
       console.log(response);
 
-      closeDialog()
+      closeDialog();
       setCreatedLink((prev) => prev + 1);
       setIsCreateLinkModalOpen(false);
-      openDialog("Link cadastrado com sucesso!")
+      openDialog("Link cadastrado com sucesso!");
     } catch (error) {
       console.log("Erro -" + error);
       openDialog("Ocorreu um erro ao cadastrar o link");

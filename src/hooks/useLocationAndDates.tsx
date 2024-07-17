@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { DateRange } from "react-day-picker";
 import { api } from "@/lib/axios";
 import { formatDisplayedDate } from "@/utils";
+import { useEffect, useState } from "react";
+import { DateRange } from "react-day-picker";
 
 export function useLocationAndDates(tripId?: string) {
   const [destination, setDestination] = useState("");

@@ -1,8 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { DefaultLayout } from "./pages/layouts/DefaultLayout";
 import { Home } from "@/pages/Home";
-import { TripDetails } from "./pages/TripDetails";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { DialogProvider } from "./contexts/DialogContext";
+import { DefaultLayout } from "./pages/layouts/DefaultLayout";
+import { TripDetails } from "./pages/TripDetails";
 
 const router = createBrowserRouter([
   {

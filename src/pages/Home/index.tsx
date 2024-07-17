@@ -1,16 +1,21 @@
-import { ArrowRight, Mail, Settings2, User, UserRoundPlus } from "lucide-react";
-import { FormEvent, useState } from "react";
-import { InputGroupWrapper } from "@/components/InputGroupWrapper";
-import { DateRange } from "react-day-picker";
 import { Button } from "@/components/Button";
-import { Modal } from "@/components/Modal";
-import { formatDisplayedDate, iconStyle, inputIconStyle } from "@/utils";
-import { api } from "@/lib/axios";
-import { LocationAndDatesGroup } from "@/components/LocationAndDatesGroup";
+import { InputGroupWrapper } from "@/components/InputGroupWrapper";
 import { InputModalWrapper } from "@/components/InputModalWrapper";
 import { InviteGuests } from "@/components/InviteGuests";
-import { useInviteGuests } from "@/hooks/useInviteGuests";
+import { LocationAndDatesGroup } from "@/components/LocationAndDatesGroup";
+import { Modal } from "@/components/Modal";
 import { useDialog } from "@/hooks/useDialog";
+import { useInviteGuests } from "@/hooks/useInviteGuests";
+import { api } from "@/lib/axios";
+import {
+  formatDisplayedDate,
+  iconStyle,
+  inputIconStyle,
+  validateAndReturnStartDate,
+} from "@/utils";
+import { ArrowRight, Mail, Settings2, User, UserRoundPlus } from "lucide-react";
+import { FormEvent, useState } from "react";
+import { DateRange } from "react-day-picker";
 
 export function Home() {
   const [isInviteSectionOpen, setIsInviteSectionOpen] = useState(false);
@@ -56,17 +61,15 @@ export function Home() {
       return;
     }
 
-    const startDate =
-      tripStartAndEndDates.from.getDate() === new Date().getDate()
-        ? tripStartAndEndDates.from.setTime(new Date().getTime() + 10)
-        : tripStartAndEndDates.from;
+    const startDate = validateAndReturnStartDate(tripStartAndEndDates.from);
+    const endDate = tripStartAndEndDates.to.setHours(23, 59, 0, 0);
 
     openDialog("loading");
     try {
       const response = await api.post("/trips", {
         destination,
         starts_at: startDate,
-        ends_at: tripStartAndEndDates.to.setHours(23, 59, 0, 0),
+        ends_at: endDate,
         emails_to_invite: guestList,
         owner_name: fullName,
         owner_email: personalEmail,

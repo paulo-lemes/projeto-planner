@@ -1,6 +1,6 @@
-import { FormEvent, ReactNode } from "react";
-import { X, AtSign, Plus } from "lucide-react";
 import { iconStyle, inputIconStyle } from "@/utils";
+import { AtSign, Plus, X } from "lucide-react";
+import { FormEvent, ReactNode } from "react";
 import { Button } from "../Button";
 
 interface InviteGuestsProps {

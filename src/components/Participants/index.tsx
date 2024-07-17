@@ -1,3 +1,12 @@
+import { useDialog } from "@/hooks/useDialog";
+import { useInviteGuests } from "@/hooks/useInviteGuests";
+import { api } from "@/lib/axios";
+import {
+  handleDelete,
+  iconStyle,
+  inputIconStyle,
+  inputModalStyle,
+} from "@/utils";
 import {
   CircleCheck,
   CircleDashed,
@@ -7,19 +16,10 @@ import {
   UserX,
 } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
-import { api } from "@/lib/axios";
-import {
-  handleDelete,
-  iconStyle,
-  inputIconStyle,
-  inputModalStyle,
-} from "@/utils";
 import { Button } from "../Button";
-import { Modal } from "../Modal";
 import { InputModalWrapper } from "../InputModalWrapper";
 import { InviteGuests } from "../InviteGuests";
-import { useInviteGuests } from "@/hooks/useInviteGuests";
-import { useDialog } from "@/hooks/useDialog";
+import { Modal } from "../Modal";
 
 interface ParticipantsProps {
   tripId?: string;
@@ -164,7 +164,8 @@ export function Participants({ tripId }: ParticipantsProps) {
                       "participants",
                       id,
                       () => setChangedParticipant((prev) => prev + 1),
-                      () => openDialog("Ocorreu um erro ao remover o participante")
+                      () =>
+                        openDialog("Ocorreu um erro ao remover o participante")
                     )
                   }
                   className="text-neutral-400 hover:text-neutral-200"

@@ -1,3 +1,5 @@
+import { useDialog } from "@/hooks/useDialog";
+import { api } from "@/lib/axios";
 import {
   formatDates,
   handleDelete,
@@ -5,16 +7,14 @@ import {
   inputIconStyle,
   inputModalStyle,
 } from "@/utils";
-import { FormEvent, useEffect, useState } from "react";
-import { CircleCheck, Plus, Tag, Trash2 } from "lucide-react";
-import { api } from "@/lib/axios";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Button } from "../Button";
-import { Modal } from "../Modal";
-import { InputModalWrapper } from "../InputModalWrapper";
+import { CircleCheck, Plus, Tag, Trash2 } from "lucide-react";
+import { FormEvent, useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
-import { useDialog } from "@/hooks/useDialog";
+import { Button } from "../Button";
+import { InputModalWrapper } from "../InputModalWrapper";
+import { Modal } from "../Modal";
 
 interface ActivitiesProps {
   tripId?: string;
