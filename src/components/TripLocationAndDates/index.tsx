@@ -20,20 +20,17 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
   const { openDialog, closeDialog } = useDialog();
 
   const handleLocationAndDatesChange = async () => {
-    if (!destination) {
-      openDialog(
-        "Erro ao processar a alteração: informação de destino deve conter pelo menos 4 caracteres"
-      );
+    if (!destination || destination.length < 4) {
+      openDialog("Erro ao processar a alteração: informação de destino deve conter pelo menos 4 caracteres");
       return;
     }
+
     if (
       !tripStartAndEndDates ||
       !tripStartAndEndDates.from ||
       !tripStartAndEndDates.to
     ) {
-      openDialog(
-        "Erro ao processar a alteração: informação de período deve conter data de início e fim da viagem"
-      );
+      openDialog("Erro ao processar a alteração: informação de período deve conter data de início e fim da viagem");
       return;
     }
 

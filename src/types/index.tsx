@@ -24,6 +24,12 @@ export interface Link {
   title: string;
   url: string;
 }
+export interface Participant {
+  id: string;
+  name: string;
+  email: string;
+  is_confirmed: boolean;
+}
 
 export interface DialogContextType {
   isDialogOpen: boolean;
