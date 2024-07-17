@@ -1,24 +1,11 @@
 import { useDialog } from "@/hooks/useDialog";
 import { api } from "@/lib/axios";
+import { TripLocationAndDatesProps } from "@/types";
 import { iconStyle, validateAndReturnStartDate } from "@/utils";
 import { Pencil, Settings2 } from "lucide-react";
-import { DateRange } from "react-day-picker";
 import { Button } from "../Button";
 import { InputGroupWrapper } from "../InputGroupWrapper";
 import { LocationAndDatesGroup } from "../LocationAndDatesGroup";
-
-interface TripLocationAndDatesProps {
-  tripId?: string;
-  destination: string;
-  setDestination: (value: string) => void;
-  tripStartAndEndDates: DateRange | undefined;
-  setTripStartAndEndDates: (value: DateRange | undefined) => void;
-  displayedDate: string | null;
-  isLocationAndDatesDisabled: boolean;
-  enableLocationAndDates: () => void;
-  disableLocationAndDates: () => void;
-  updateChangedTripDates: () => void;
-}
 
 export function TripLocationAndDates(props: TripLocationAndDatesProps) {
   const {

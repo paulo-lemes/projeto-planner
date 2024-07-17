@@ -1,13 +1,5 @@
+import { DialogContextType } from "@/types";
 import { ReactNode, createContext, useCallback, useState } from "react";
-
-export interface DialogContextType {
-  isDialogOpen: boolean;
-  openDialog: (value: string) => void;
-  closeDialog: () => void;
-  dialogText: string;
-  redirectAfterClose: string | null;
-  setRedirectAfterClose: (value: string | null) => void;
-}
 
 export const DialogContext = createContext<DialogContextType>({
   isDialogOpen: false,

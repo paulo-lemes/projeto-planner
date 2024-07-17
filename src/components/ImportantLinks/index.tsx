@@ -1,5 +1,6 @@
 import { useDialog } from "@/hooks/useDialog";
 import { api } from "@/lib/axios";
+import { ImportantLinksProps, Link } from "@/types";
 import {
   handleDelete,
   iconStyle,
@@ -11,16 +12,6 @@ import { FormEvent, useEffect, useState } from "react";
 import { Button } from "../Button";
 import { InputModalWrapper } from "../InputModalWrapper";
 import { Modal } from "../Modal";
-
-interface ImportantLinksProps {
-  tripId?: string;
-}
-
-interface Link {
-  id: string;
-  title: string;
-  url: string;
-}
 
 export function ImportantLinks({ tripId }: ImportantLinksProps) {
   const [links, setLinks] = useState<Link[]>([]);

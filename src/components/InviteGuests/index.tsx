@@ -1,14 +1,7 @@
+import { InviteGuestsProps } from "@/types";
 import { iconStyle, inputIconStyle } from "@/utils";
 import { AtSign, Plus, X } from "lucide-react";
-import { FormEvent, ReactNode } from "react";
 import { Button } from "../Button";
-
-interface InviteGuestsProps {
-  guestList: string[];
-  addGuestEmail: (event: FormEvent<HTMLFormElement>) => void;
-  deleteGuestEmail: (value: string) => void;
-  children?: ReactNode;
-}
 
 export function InviteGuests({
   guestList,

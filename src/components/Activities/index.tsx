@@ -1,5 +1,6 @@
 import { useDialog } from "@/hooks/useDialog";
 import { api } from "@/lib/axios";
+import { ActivitiesProps, Activity } from "@/types";
 import {
   formatDates,
   handleDelete,
@@ -11,25 +12,9 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CircleCheck, Plus, Tag, Trash2 } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
-import { DateRange } from "react-day-picker";
 import { Button } from "../Button";
 import { InputModalWrapper } from "../InputModalWrapper";
 import { Modal } from "../Modal";
-
-interface ActivitiesProps {
-  tripId?: string;
-  tripStartAndEndDates: DateRange | undefined;
-  changedTripDates: number;
-}
-
-interface Activity {
-  date: string;
-  activities: {
-    id: string;
-    title: string;
-    occurs_at: string;
-  }[];
-}
 
 export function Activities({
   tripId,

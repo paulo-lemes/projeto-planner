@@ -1,19 +1,11 @@
+import { LocationAndDatesGroupProps } from "@/types";
 import { inputIconStyle } from "@/utils";
 import { ptBR } from "date-fns/locale";
 import { Calendar, MapPin } from "lucide-react";
 import { useState } from "react";
-import { DateRange, DayPicker } from "react-day-picker";
+import { DayPicker } from "react-day-picker";
 import { Button } from "../Button";
 import { Modal } from "../Modal";
-
-interface LocationAndDatesGroupProps {
-  destination: string;
-  setDestination: (value: string) => void;
-  isInputsDisabled: boolean;
-  tripStartAndEndDates: DateRange | undefined;
-  setTripStartAndEndDates: (value: DateRange | undefined) => void;
-  displayedDate: string | null;
-}
 
 export function LocationAndDatesGroup({
   destination,
