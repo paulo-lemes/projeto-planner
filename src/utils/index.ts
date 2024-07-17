@@ -32,12 +32,18 @@ export function formatDates(dates: DateRange | undefined) {
   }
 }
 
-export const handleDelete = async (
+export function validateAndReturnStartDate(date: Date) {
+  return date.getDate() === new Date().getDate()
+    ? date.setTime(new Date().getTime() + 1000)
+    : date;
+}
+
+export async function handleDelete(
   path: string,
   id: string,
   callback: () => void,
   errorCallback: () => void
-) => {
+) {
   try {
     const response = await api.delete(`/${path}/${id}`);
     console.log(response);
@@ -47,4 +53,4 @@ export const handleDelete = async (
     console.log("Erro -" + error);
     errorCallback();
   }
-};
+}

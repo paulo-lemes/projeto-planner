@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
-import { TripLocationAndDates } from "@/components/TripLocationAndDates";
 import { Activities } from "@/components/Activities";
 import { ImportantLinks } from "@/components/ImportantLinks";
 import { Participants } from "@/components/Participants";
+import { TripLocationAndDates } from "@/components/TripLocationAndDates";
 import { useLocationAndDates } from "@/hooks/useLocationAndDates";
+import { useParams } from "react-router-dom";
 
 export function TripDetails() {
   const { tripId } = useParams();

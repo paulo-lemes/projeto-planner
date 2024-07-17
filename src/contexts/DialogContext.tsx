@@ -1,9 +1,4 @@
-import {
-  ReactNode,
-  createContext,
-  useCallback,
-  useState,
-} from "react";
+import { ReactNode, createContext, useCallback, useState } from "react";
 
 export interface DialogContextType {
   isDialogOpen: boolean;

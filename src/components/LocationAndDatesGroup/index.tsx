@@ -1,10 +1,10 @@
+import { inputIconStyle } from "@/utils";
+import { ptBR } from "date-fns/locale";
+import { Calendar, MapPin } from "lucide-react";
+import { useState } from "react";
+import { DateRange, DayPicker } from "react-day-picker";
 import { Button } from "../Button";
 import { Modal } from "../Modal";
-import { inputIconStyle } from "@/utils";
-import { MapPin, Calendar } from "lucide-react";
-import { DayPicker, DateRange } from "react-day-picker";
-import { ptBR } from "date-fns/locale";
-import { useState } from "react";
 
 interface LocationAndDatesGroupProps {
   destination: string;

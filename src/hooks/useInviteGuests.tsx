@@ -8,12 +8,12 @@ export function useInviteGuests() {
   const { openDialog } = useDialog();
 
   const openInviteGuestsModal = () => {
-    setIsInviteGuestsModalOpen(true)
-  }
+    setIsInviteGuestsModalOpen(true);
+  };
 
   const closeInviteGuestsModal = () => {
-    setIsInviteGuestsModalOpen(false)
-  }
+    setIsInviteGuestsModalOpen(false);
+  };
 
   const addGuestEmail = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -49,6 +49,6 @@ export function useInviteGuests() {
     guestList,
     setGuestList,
     addGuestEmail,
-    deleteGuestEmail
-  }
+    deleteGuestEmail,
+  };
 }

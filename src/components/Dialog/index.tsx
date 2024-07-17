@@ -7,7 +7,7 @@ export function Dialog() {
 
   const handleCloseDialog = () => {
     closeDialog();
-    if (redirectAfterClose) window.location.href = redirectAfterClose
+    if (redirectAfterClose) window.location.href = redirectAfterClose;
   };
 
   const isLoading = dialogText === "loading";

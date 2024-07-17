@@ -1,12 +1,11 @@
-import { useEffect } from "react";
+import { useDialog } from "@/hooks/useDialog";
 import { api } from "@/lib/axios";
+import { iconStyle, validateAndReturnStartDate } from "@/utils";
+import { Pencil, Settings2 } from "lucide-react";
+import { DateRange } from "react-day-picker";
+import { Button } from "../Button";
 import { InputGroupWrapper } from "../InputGroupWrapper";
 import { LocationAndDatesGroup } from "../LocationAndDatesGroup";
-import { Button } from "../Button";
-import { DateRange } from "react-day-picker";
-import { iconStyle } from "@/utils";
-import { Pencil, Settings2 } from "lucide-react";
-import { useDialog } from "@/hooks/useDialog";
 
 interface TripLocationAndDatesProps {
   tripId?: string;
@@ -25,23 +24,13 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
   const {
     tripId,
     destination,
-    setDestination,
     tripStartAndEndDates,
-    setTripStartAndEndDates,
     isLocationAndDatesDisabled,
     enableLocationAndDates,
     disableLocationAndDates,
     updateChangedTripDates,
   } = props;
   const { openDialog, closeDialog } = useDialog();
-
-  useEffect(() => {
-    api.get(`trips/${tripId}`).then((response) => {
-      const trip = response.data.trip;
-      setDestination(trip.destination);
-      setTripStartAndEndDates({ from: trip.starts_at, to: trip.ends_at });
-    });
-  }, [tripId, setDestination, setTripStartAndEndDates]);
 
   const handleLocationAndDatesChange = async () => {
     if (!destination) {
@@ -61,12 +50,16 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
       return;
     }
 
+    const tripDateFrom = new Date(tripStartAndEndDates.from);
+    const startDate = validateAndReturnStartDate(tripDateFrom);
+    const endDate = new Date(tripStartAndEndDates.to).setHours(23, 59, 0, 0);
+
     openDialog("loading");
     try {
       const response = await api.put(`/trips/${tripId}`, {
         destination,
-        starts_at: tripStartAndEndDates.from,
-        ends_at: tripStartAndEndDates.to.setHours(23, 59, 0, 0),
+        starts_at: startDate,
+        ends_at: endDate,
       });
       console.log(response);
 
