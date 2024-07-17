@@ -33,8 +33,13 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
     const title = data.get("title")?.toString();
     const url = data.get("url")?.toString();
 
-    if (!title || !url) {
-      openDialog("Preencha os campos para criar o link");
+    if (!title) {
+      openDialog("É necessário um título para criar o link");
+      return;
+    }
+
+    if (!url) {
+      openDialog("É necessário uma URL válida para criar o link");
       return;
     }
 

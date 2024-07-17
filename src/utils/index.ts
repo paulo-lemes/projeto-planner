@@ -41,16 +41,16 @@ export function validateAndReturnStartDate(date: Date) {
 export async function handleDelete(
   path: string,
   id: string,
-  callback: () => void,
-  errorCallback: () => void
+  dialog: () => void,
+  errorDialog: () => void
 ) {
   try {
     const response = await api.delete(`/${path}/${id}`);
     console.log(response);
 
-    callback();
+    dialog();
   } catch (error) {
     console.log("Erro -" + error);
-    errorCallback();
+    errorDialog();
   }
 }

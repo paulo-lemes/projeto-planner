@@ -1,7 +1,7 @@
 import { useDialog } from "@/hooks/useDialog";
 import { useInviteGuests } from "@/hooks/useInviteGuests";
 import { api } from "@/lib/axios";
-import { ParticipantsProps } from "@/types";
+import { Participant, ParticipantsProps } from "@/types";
 import {
   handleDelete,
   iconStyle,
@@ -21,13 +21,6 @@ import { Button } from "../Button";
 import { InputModalWrapper } from "../InputModalWrapper";
 import { InviteGuests } from "../InviteGuests";
 import { Modal } from "../Modal";
-
-interface Participant {
-  id: string;
-  name: string;
-  email: string;
-  is_confirmed: boolean;
-}
 
 export function Participants({ tripId }: ParticipantsProps) {
   const [participants, setParticipants] = useState<Participant[]>([]);
@@ -143,7 +136,9 @@ export function Participants({ tripId }: ParticipantsProps) {
               </div>
               <div className="shrink-0 flex gap-2">
                 {is_confirmed ? (
-                  <CircleCheck className="text-primary-400 size-5 shrink-0" />
+                  <span title="participante confirmado">
+                    <CircleCheck className="text-primary-400 size-5 shrink-0" />
+                  </span>
                 ) : (
                   <button
                     type="button"
