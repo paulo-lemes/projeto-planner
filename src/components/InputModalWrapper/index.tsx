@@ -1,8 +1,4 @@
-import { ReactNode } from "react";
-
-interface InputModalWrapperProps {
-  children: ReactNode;
-}
+import { InputModalWrapperProps } from "@/types";
 
 export function InputModalWrapper({ children }: InputModalWrapperProps) {
   return (

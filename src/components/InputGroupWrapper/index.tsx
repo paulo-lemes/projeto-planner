@@ -1,10 +1,5 @@
-import { ReactNode } from "react";
+import { InputGroupWrapperProps } from "@/types";
 import { twMerge } from "tailwind-merge";
-
-interface InputGroupWrapperProps {
-  children: ReactNode;
-  classCSS?: string;
-}
 
 export function InputGroupWrapper({
   children,

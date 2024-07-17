@@ -1,6 +1,7 @@
 import { useDialog } from "@/hooks/useDialog";
 import { useInviteGuests } from "@/hooks/useInviteGuests";
 import { api } from "@/lib/axios";
+import { ParticipantsProps } from "@/types";
 import {
   handleDelete,
   iconStyle,
@@ -20,10 +21,6 @@ import { Button } from "../Button";
 import { InputModalWrapper } from "../InputModalWrapper";
 import { InviteGuests } from "../InviteGuests";
 import { Modal } from "../Modal";
-
-interface ParticipantsProps {
-  tripId?: string;
-}
 
 interface Participant {
   id: string;
