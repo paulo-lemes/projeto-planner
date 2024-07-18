@@ -19,6 +19,29 @@ body {
   color: #f3f4f6;
 }
 
-.rdp{
-    --rdp-background-color: #0284c7; /* Background color for the hovered/focused elements. */
+.rdp {
+  --rdp-background-color: #0284c7; /* Background color for the hovered/focused elements. */
+}
+
+.rdp-day_range_start,
+.rdp-day_range_end {
+  background-color: #0ea5e9;
+}
+
+.rdp-day {
+  border-radius: 20%;
+}
+
+.rdp-day_range_middle {
+  border-radius: 0;
+}
+
+.rdp:not([dir="rtl"]) .rdp-day_range_start:not(.rdp-day_range_end) {
+  border-top-left-radius: 20%;
+  border-bottom-left-radius: 20%;
+}
+
+.rdp:not([dir="rtl"]) .rdp-day_range_end:not(.rdp-day_range_start) {
+  border-top-right-radius: 20%;
+  border-bottom-right-radius: 20%;
 }
