@@ -103,7 +103,7 @@ export function Activities({
                       >
                         <CircleCheck className="size-5 text-primary-300 shrink-0" />
                         <span
-                          className="text-neutral-100 truncate"
+                          className="text-neutral-100 break-words"
                           title={title}
                         >
                           {title}
