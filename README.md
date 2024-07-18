@@ -1,4 +1,4 @@
-# Projeto Movie Wave
+# Projeto plann.er
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/paulo-lemes/projeto-planner?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/paulo-lemes/projeto-planner?style=for-the-badge)
