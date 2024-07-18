@@ -156,6 +156,7 @@ export function Participants({ tripId }: ParticipantsProps) {
                       "participants",
                       id,
                       () => setChangedParticipant((prev) => prev + 1),
+                      () => openDialog("Participante removido com sucesso"),
                       () =>
                         openDialog("Ocorreu um erro ao remover o participante")
                     )

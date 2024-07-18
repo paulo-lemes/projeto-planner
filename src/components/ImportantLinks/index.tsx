@@ -101,6 +101,7 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
                       "links",
                       id,
                       () => setCreatedLink((prev) => prev + 1),
+                      () => openDialog("Link deletado com sucesso"),
                       () => openDialog("Ocorreu um erro ao deletar o link")
                     )
                   }

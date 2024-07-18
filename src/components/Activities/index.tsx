@@ -121,6 +121,8 @@ export function Activities({
                                 id,
                                 () => setCreatedActivity((prev) => prev + 1),
                                 () =>
+                                  openDialog("Atividade deletada com sucesso"),
+                                () =>
                                   openDialog(
                                     "Ocorreu um erro ao deletar a atividade"
                                   )
