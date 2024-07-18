@@ -23,7 +23,7 @@ export function Dialog() {
           {isLoading ? (
             <div className="animate-spin-slow rounded-full size-10 border-4 border-b-transparent border-primary-500 border-solid" />
           ) : (
-            <div className="relative bg-neutral-900 py-6 px-12 rounded-xl shadow-shape">
+            <div className="relative bg-neutral-900 py-6 px-6 sm:px-12 rounded-xl shadow-shape">
               <div className="w-max max-w-full flex flex-col gap-5">
                 <p className="text-lg text-center">{dialogText}</p>
                 <Button onClick={handleCloseDialog} className="m-auto">
