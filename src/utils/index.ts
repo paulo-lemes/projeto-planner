@@ -1,5 +1,6 @@
 import { api } from "@/lib/axios";
 import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { DateRange } from "react-day-picker";
 
 export const iconStyle = "size-5";
@@ -9,9 +10,9 @@ export const inputModalStyle =
 
 export function formatDisplayedDate(dates: DateRange | undefined) {
   return dates && dates.from && dates.to
-    ? format(dates.from, "d' de 'LLL")
+    ? format(dates.from, "d' de 'LLL", { locale: ptBR })
         .concat(" até ")
-        .concat(format(dates.to, "d' de 'LLL"))
+        .concat(format(dates.to, "d' de 'LLL", { locale: ptBR }))
     : null;
 }
 
