@@ -25,8 +25,8 @@ export function Dialog() {
           ) : (
             <div className="relative bg-neutral-900 py-6 px-6 sm:px-12 rounded-xl shadow-shape">
               <div className="w-max max-w-full flex flex-col gap-5">
-                <p className="text-lg text-center">{dialogText}</p>
-                <Button onClick={handleCloseDialog} className="m-auto">
+                <p className="text-lg text-center" data-test="dialog-text">{dialogText}</p>
+                <Button onClick={handleCloseDialog} className="m-auto" data-test="close-dialog-button">
                   Fechar
                 </Button>
               </div>

@@ -119,6 +119,7 @@ export function Home() {
               type="button"
               onClick={openInviteSection}
               className="w-full sm:w-max"
+              data-test="continue-button"
             >
               Continuar
               <ArrowRight className={iconStyle} />
@@ -129,6 +130,7 @@ export function Home() {
               type="button"
               onClick={() => setIsInviteSectionOpen(false)}
               className="w-full sm:w-max"
+              data-test="change-trip-details-button"
             >
               Alterar local/data
               <Settings2 className={iconStyle} />

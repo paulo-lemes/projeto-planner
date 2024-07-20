@@ -30,6 +30,7 @@ export function LocationAndDatesGroup({
           disabled={isInputsDisabled}
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
+          data-test="destination-input"
         />
       </div>
       <button
@@ -42,7 +43,7 @@ export function LocationAndDatesGroup({
         }`}
       >
         <Calendar className={inputIconStyle} />
-        <span className={`w-max shrink-0`}>{displayedDate || "Quando?"}</span>
+        <span className="w-max shrink-0" data-test="date-button">{displayedDate || "Quando?"}</span>
       </button>
 
       {/* Date picker modal */}
