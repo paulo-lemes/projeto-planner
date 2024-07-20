@@ -41,9 +41,12 @@ export function LocationAndDatesGroup({
             ? "text-neutral-100 disabled:text-neutral-300"
             : "text-neutral-400"
         }`}
+        data-test="date-button"
       >
         <Calendar className={inputIconStyle} />
-        <span className="w-max shrink-0" data-test="date-button">{displayedDate || "Quando?"}</span>
+        <span className="w-max shrink-0">
+          {displayedDate || "Quando?"}
+        </span>
       </button>
 
       {/* Date picker modal */}
@@ -67,6 +70,7 @@ export function LocationAndDatesGroup({
           type="button"
           onClick={() => setIsDatePickerModalOpen(false)}
           className="w-full mb-3"
+          data-test="confirm-dates-button"
         >
           Confirmar
         </Button>
