@@ -56,8 +56,27 @@ describe("Create trip spec", () => {
     cy.getByData("email")
       .should("exist")
       .and("contain.text", "teste@email.com");
+    cy.getByData("close-modal-button").click();
+    cy.getByData("open-invite-guests-modal-button")
+      .should("exist")
+      .and("contain.text", "1 pessoa(s) convidada(s)")
+      .click();
     cy.getByData("delete-email-button").click();
     cy.getByData("email").should("not.exist");
     cy.getByData("close-modal-button").click();
+  });
+
+  it("should not let create trip with owner name or email missing", () => {
+    cy.getByData("destination-input").type("São Paulo");
+    cy.selectDates();
+    cy.getByData("continue-button").click();
+    cy.getByData("confirm-trip-button").click();
+    cy.getByData("owner-name-input").should("exist").type("Paulo");
+    cy.getByData("create-trip-button").click();
+    cy.verifyDialogTextAndClose("Preencha os campos para criar a viagem");
+    cy.getByData("owner-name-input").clear();
+    cy.getByData("owner-email-input").should("exist").type("paulo@email.com");
+    cy.getByData("create-trip-button").click();
+    cy.verifyDialogTextAndClose("Preencha os campos para criar a viagem");
   });
 });
