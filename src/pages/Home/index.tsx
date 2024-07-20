@@ -162,6 +162,7 @@ export function Home() {
               type="button"
               className="w-full sm:w-max"
               onClick={() => setIsConfirmTripModalOpen(true)}
+              data-test="confirm-trip-button"
             >
               Confirmar viagem
               <ArrowRight className={iconStyle} />
@@ -230,6 +231,7 @@ export function Home() {
               id="fullName"
               name="fullName"
               placeholder="Seu nome completo"
+              data-test="owner-name-input"
             />
           </InputModalWrapper>
           <InputModalWrapper>
@@ -240,9 +242,10 @@ export function Home() {
               id="personalEmail"
               name="personalEmail"
               placeholder="Seu e-mail pessoal"
+              data-test="owner-email-input"
             />
           </InputModalWrapper>
-          <Button type="submit" className="w-full mt-2 h-11">
+          <Button type="submit" className="w-full mt-2 h-11" data-test="create-trip-button">
             Confirmar criação da viagem
           </Button>
         </form>
