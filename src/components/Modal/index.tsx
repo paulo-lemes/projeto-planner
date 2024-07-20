@@ -27,6 +27,7 @@ export function Modal({ isModalOpen, children, closeModal }: ModalProps) {
               title="fechar"
               onClick={closeModal}
               className="absolute top-5 right-6"
+              data-test="close-modal-button"
             >
               <X className="size-5" />
             </button>

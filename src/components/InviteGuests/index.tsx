@@ -10,7 +10,7 @@ export function InviteGuests({
   children,
 }: InviteGuestsProps) {
   return (
-    <div className="lg:w-[720px] max-w-full flex flex-col gap-5">
+    <div className="lg:w-[720px] max-w-full flex flex-col gap-5" data-test="invite-guests-div">
       <div className="flex flex-col gap-2">
         <h2 className="font-lg font-semibold">Selecionar convidados</h2>
         <p className="text-sm text-zinc-400">
@@ -25,11 +25,12 @@ export function InviteGuests({
               key={email}
               className="py-1.5 px-2.5 bg-neutral-800 flex gap-2.5 rounded-md"
             >
-              <p className="text-neutral-300">{email}</p>
+              <p className="text-neutral-300" data-test="email">{email}</p>
               <button
                 type="button"
                 title="remover"
                 onClick={() => deleteGuestEmail(email)}
+                data-test="delete-email-button"
               >
                 <X className={iconStyle} />
               </button>
@@ -50,9 +51,10 @@ export function InviteGuests({
             id="guestEmail"
             name="guestEmail"
             placeholder="Digite o e-mail do convidado"
+            data-test="email-input"
           />
         </div>
-        <Button type="submit" className="w-full sm:w-max">
+        <Button type="submit" className="w-full sm:w-max" data-test="invite-button">
           Convidar
           <Plus className={iconStyle} />
         </Button>

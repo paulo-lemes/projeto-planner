@@ -145,6 +145,7 @@ export function Home() {
               type="button"
               className="flex items-center gap-2 sm:flex-1 text-left w-full sm:w-max"
               onClick={openInviteGuestsModal}
+              data-test="open-invite-guests-modal-button"
             >
               <UserRoundPlus className={inputIconStyle} />
               {guestList.length > 0 ? (
