@@ -60,7 +60,7 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
   };
 
   return (
-    <InputGroupWrapper classCSS="min-w-full">
+    <InputGroupWrapper classCSS="min-w-full" dataTest="trip-details-section">
       <LocationAndDatesGroup
         {...props}
         isInputsDisabled={isLocationAndDatesDisabled}

@@ -14,6 +14,7 @@ export interface ImportantLinksProps {
 export interface InputGroupWrapperProps {
   children: ReactNode;
   classCSS?: string;
+  dataTest: string;
 }
 
 export interface InputModalWrapperProps {
