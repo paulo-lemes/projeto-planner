@@ -105,7 +105,7 @@ export function Home() {
       {/* Inputs section */}
       <main className="w-full flex-center flex-col gap-4">
         {/* Location and date inputs */}
-        <InputGroupWrapper>
+        <InputGroupWrapper dataTest="location-dates-section">
           <LocationAndDatesGroup
             destination={destination}
             setDestination={setDestination}
@@ -140,7 +140,7 @@ export function Home() {
 
         {/* Invite and continue section */}
         {isInviteSectionOpen && (
-          <InputGroupWrapper>
+          <InputGroupWrapper dataTest="invite-confirm-trip-section">
             <button
               type="button"
               className="flex items-center gap-2 sm:flex-1 text-left w-full sm:w-max"
