@@ -79,4 +79,18 @@ describe("Create trip spec", () => {
     cy.getByData("create-trip-button").click();
     cy.verifyDialogTextAndClose("Preencha os campos para criar a viagem");
   });
+
+  it("should create trip and redirect to sent email", () => {
+    cy.getByData("destination-input").type("São Paulo");
+    cy.selectDates();
+    cy.getByData("continue-button").click();
+    cy.getByData("confirm-trip-button").click();
+    cy.getByData("owner-name-input").type("Paulo");
+    cy.getByData("owner-email-input").type("paulo@email.com");
+    cy.getByData("create-trip-button").click();
+    cy.wait(5000);
+    cy.verifyDialogTextAndClose(
+      "Viagem criada com sucesso! Você será redirecionado para realizar a confirmação por e-mail"
+    );
+  });
 });
