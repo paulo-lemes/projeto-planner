@@ -1,7 +1,6 @@
 describe("Update trip spec", () => {
   beforeEach(() => {
     cy.visitTripDetailsPage();
-    cy.wait(1000);
   });
 
   it("should update trip details", () => {
@@ -23,6 +22,17 @@ describe("Update trip spec", () => {
     cy.getByData("confirm-change-trip-details-button").click();
     cy.verifyDialogTextAndClose(
       "Erro ao processar a alteração: informação de destino deve conter pelo menos 4 caracteres"
+    );
+  });
+
+  it("should not update trip details with dates empty", () => {
+    cy.getByData("update-trip-details-button").click();
+    cy.getByData("date-button").click();
+    cy.getByData("clear-dates-button").click();
+    cy.getByData("confirm-dates-button").click();
+    cy.getByData("confirm-change-trip-details-button").click();
+    cy.verifyDialogTextAndClose(
+      "Erro ao processar a alteração: informação de período deve conter data de início e fim da viagem"
     );
   });
 });

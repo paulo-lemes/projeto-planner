@@ -36,4 +36,5 @@ Cypress.Commands.add("selectDates", () => {
 Cypress.Commands.add("visitTripDetailsPage", () => {
   cy.visit(`/trips/${Cypress.env("tripId")}`);
   cy.getByData("trip-details-section").should("exist");
+  cy.wait(1000);
 });

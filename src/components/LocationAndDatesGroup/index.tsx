@@ -80,6 +80,7 @@ export function LocationAndDatesGroup({
             type="button"
             onClick={() => setTripStartAndEndDates(undefined)}
             className="w-full"
+            data-test="clear-dates-button"
           >
             Limpar
           </Button>
