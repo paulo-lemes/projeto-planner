@@ -70,6 +70,7 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
           type="button"
           onClick={handleLocationAndDatesChange}
           className="w-full sm:w-max"
+          data-test="confirm-change-trip-details-button"
         >
           Confirmar alteração
           <Pencil className={iconStyle} />
@@ -80,6 +81,7 @@ export function TripLocationAndDates(props: TripLocationAndDatesProps) {
           type="button"
           onClick={enableLocationAndDates}
           className="w-full sm:w-max"
+          data-test="update-trip-details-button"
         >
           Alterar local/data
           <Settings2 className={iconStyle} />

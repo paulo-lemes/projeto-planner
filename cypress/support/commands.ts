@@ -6,6 +6,7 @@ declare namespace Cypress {
     getByData(selector: string): Chainable;
     verifyDialogTextAndClose(text: string): Chainable;
     selectDates(): Chainable;
+    visitTripDetailsPage(): Chainable;
   }
 }
 
@@ -30,4 +31,9 @@ Cypress.Commands.add("selectDates", () => {
   cy.getByData("date-button")
     .should("exist")
     .and("not.contain.text", "Quando?");
+});
+
+Cypress.Commands.add("visitTripDetailsPage", () => {
+  cy.visit(`/trips/${Cypress.env("tripId")}`);
+  cy.getByData("trip-details-section").should("exist");
 });
