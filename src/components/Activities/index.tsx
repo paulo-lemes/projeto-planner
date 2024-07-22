@@ -106,6 +106,7 @@ export function Activities({
                         <span
                           className="text-neutral-100 break-words"
                           title={title}
+                          data-test="activity-title"
                         >
                           {title}
                         </span>
@@ -130,6 +131,7 @@ export function Activities({
                               )
                             }
                             className="text-neutral-400 hover:text-neutral-200"
+                            data-test="delete-activity-button"
                           >
                             <Trash2 className={iconStyle} />
                           </button>
