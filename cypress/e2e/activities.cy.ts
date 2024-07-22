@@ -13,6 +13,13 @@ describe("Activities spec", () => {
     cy.verifyDialogTextAndClose("Preencha os campos para criar a atividade");
   });
 
+  it("should not create activity without datetime", () => {
+    cy.getByData("create-activity-button").click();
+    cy.getByData("activity-title-input").type("Atividade teste");
+    cy.getByData("save-activity-button").click();
+    cy.verifyDialogTextAndClose("Preencha os campos para criar a atividade");
+  });
+
   it("should create activity properly", () => {
     cy.getByData("create-activity-button").click();
     cy.getByData("activity-title-input").type("Atividade teste");
