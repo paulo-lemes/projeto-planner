@@ -74,6 +74,7 @@ export function Activities({
           type="button"
           onClick={() => setIsCreateActivityModalOpen(true)}
           className="w-full sm:w-max"
+          data-test="create-activity-button"
         >
           <Plus className="size-5" />
           Cadastrar atividade
@@ -166,6 +167,7 @@ export function Activities({
                 name="title"
                 placeholder="Qual a atividade?"
                 className={inputModalStyle}
+                data-test="activity-title-input"
               />
             </InputModalWrapper>
             <InputModalWrapper>
@@ -176,9 +178,10 @@ export function Activities({
                 name="occurs_at"
                 placeholder="Data e horário da atividade"
                 className={`${inputModalStyle} text-neutral-400 dark:[color-scheme:dark]`}
+                data-test="datetime-input"
               />
             </InputModalWrapper>
-            <Button type="submit" className="w-full !mt-4 h-11">
+            <Button type="submit" className="w-full !mt-4 h-11" data-test="save-activity-button">
               Salvar atividade
             </Button>
           </form>
