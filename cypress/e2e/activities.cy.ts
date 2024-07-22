@@ -3,6 +3,16 @@ describe("Activities spec", () => {
     cy.visitTripDetailsPage();
   });
 
+  it("should not create activity with title empty or short", () => {
+    cy.getByData("create-activity-button").click();
+    cy.getByData("activity-title-input").type("123");
+    cy.getByData("save-activity-button").click();
+    cy.verifyDialogTextAndClose("Preencha os campos para criar a atividade");
+    cy.getByData("activity-title-input").clear();
+    cy.getByData("save-activity-button").click();
+    cy.verifyDialogTextAndClose("Preencha os campos para criar a atividade");
+  });
+
   it("should create activity properly", () => {
     cy.getByData("create-activity-button").click();
     cy.getByData("activity-title-input").type("Atividade teste");
