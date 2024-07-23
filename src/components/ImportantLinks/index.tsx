@@ -44,7 +44,7 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
     }
 
     if (!url) {
-      openDialog("É necessário uma URL válida para criar o link");
+      openDialog("É necessário uma URL para criar o link");
       return;
     }
 
