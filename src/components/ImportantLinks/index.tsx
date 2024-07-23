@@ -71,7 +71,10 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
           links.map(({ id, title, url }) => (
             <div key={id} className="flex items-center justify-between gap-4">
               <div className="space-y-1.5">
-                <span className="block font-medium text-neutral-100">
+                <span
+                  className="block font-medium text-neutral-100"
+                  data-test="link-title"
+                >
                   {title}
                 </span>
                 <a
@@ -79,6 +82,7 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
                   rel="noopener noreferrer"
                   target="_blank"
                   className="block text-xs text-neutral-400 truncate hover:text-neutral-200"
+                  data-test="link-url"
                 >
                   {url}
                 </a>
@@ -106,6 +110,7 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
                     )
                   }
                   className="text-neutral-400 hover:text-neutral-200"
+                  data-test="delete-link-button"
                 >
                   <Trash2 className={iconStyle} />
                 </button>
@@ -120,6 +125,7 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
         variant="secondary"
         className="w-full"
         onClick={() => setIsCreateLinkModalOpen(true)}
+        data-test="create-link-button"
       >
         <Plus className="size-5" />
         Cadastrar novo link
@@ -144,6 +150,7 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
                 name="title"
                 placeholder="Título do link"
                 className={inputModalStyle}
+                data-test="link-title-input"
               />
             </InputModalWrapper>
             <InputModalWrapper>
@@ -153,10 +160,11 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
                 name="url"
                 placeholder="URL"
                 className={inputModalStyle}
+                data-test="link-url-input"
               />
             </InputModalWrapper>
-            <Button type="submit" className="w-full !mt-4 h-11">
-              Salvar atividade
+            <Button type="submit" className="w-full !mt-4 h-11" data-test="save-link-button">
+              Salvar link
             </Button>
           </form>
         </div>

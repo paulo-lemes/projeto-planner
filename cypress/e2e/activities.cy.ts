@@ -25,6 +25,7 @@ describe("Activities spec", () => {
     cy.getByData("activity-title-input").type("Atividade teste");
     cy.getByData("datetime-input").type("2024-10-01T00:00");
     cy.getByData("save-activity-button").click();
+    cy.verifyDialogTextAndClose("Atividade cadastrada com sucesso!");
   });
 
   it("should delete activity properly", () => {
