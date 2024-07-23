@@ -3,6 +3,17 @@ describe("Links spec", () => {
     cy.visitTripDetailsPage();
   });
 
+  it("should not create activity with title empty or short", () => {
+    cy.getByData("create-link-button").click();
+    cy.getByData("save-link-button").click();
+    cy.verifyDialogTextAndClose("É necessário um título para criar o link");
+    cy.getByData("link-title-input").type("123");
+    cy.getByData("save-link-button").click();
+    cy.verifyDialogTextAndClose(
+      "O título deve possuir pelo menos 4 caracteres"
+    );
+  });
+
   it("should create link properly", () => {
     cy.getByData("create-link-button").click();
     cy.getByData("link-title-input").type("Link teste");
