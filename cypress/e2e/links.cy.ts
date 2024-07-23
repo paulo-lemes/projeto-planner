@@ -10,4 +10,12 @@ describe("Links spec", () => {
     cy.getByData("save-link-button").click();
     cy.verifyDialogTextAndClose("Link cadastrado com sucesso!");
   });
+
+  it("should delete link properly", () => {
+    cy.getByData("link-title")
+      .should("exist")
+      .and("contain.text", "Link teste");
+    cy.getByData("delete-link-button").click();
+    cy.verifyDialogTextAndClose("Link deletado com sucesso");
+  });
 });
