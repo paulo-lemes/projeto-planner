@@ -38,6 +38,11 @@ export function ImportantLinks({ tripId }: ImportantLinksProps) {
       return;
     }
 
+    if (title.length < 4) {
+      openDialog("O título deve possuir pelo menos 4 caracteres");
+      return;
+    }
+
     if (!url) {
       openDialog("É necessário uma URL válida para criar o link");
       return;
