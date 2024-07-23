@@ -18,6 +18,7 @@ O projeto plann.er é um gerenciador de viagens com opções para convidar parti
 - Vite
 - React
 - TailwindCSS
+- Cypress
 - Outros: axios, date-fns, lucide.
 
 ## Como Rodar o Projeto
