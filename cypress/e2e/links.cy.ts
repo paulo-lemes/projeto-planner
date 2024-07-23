@@ -14,6 +14,16 @@ describe("Links spec", () => {
     );
   });
 
+  it("should not create activity with url empty or invalid", () => {
+    cy.getByData("create-link-button").click();
+    cy.getByData("link-title-input").type("Link teste");
+    cy.getByData("save-link-button").click();
+    cy.verifyDialogTextAndClose("É necessário uma URL para criar o link");
+    cy.getByData("link-url-input").type("linkteste");
+    cy.getByData("save-link-button").click();
+    cy.verifyDialogTextAndClose("Ocorreu um erro ao cadastrar o link");
+  });
+
   it("should create link properly", () => {
     cy.getByData("create-link-button").click();
     cy.getByData("link-title-input").type("Link teste");
