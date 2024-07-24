@@ -187,7 +187,7 @@ export function Participants({ tripId }: ParticipantsProps) {
         variant="secondary"
         className="w-full"
         onClick={openInviteGuestsModal}
-        data-test="invite-button"
+        data-test="open-invite-modal-button"
       >
         <UserPlus className={iconStyle} />
         Convidar
