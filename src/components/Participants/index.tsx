@@ -120,23 +120,30 @@ export function Participants({ tripId }: ParticipantsProps) {
             <div key={id} className="flex items-center justify-between gap-4">
               <div className="space-y-1.5">
                 <p className="flex font-medium text-neutral-100 space-x-2">
-                  <span className="truncate">
+                  <span className="truncate" data-test="participant-name">
                     {name ?? `Convidado ${index}`}
                   </span>
                   <button
                     title="editar nome"
                     onClick={() => openEditNameModal(id)}
+                    data-test="edit-name-button"
                   >
                     <Pencil className="size-3" />
                   </button>
                 </p>
-                <p className="block text-xs text-neutral-400 truncate">
+                <p
+                  className="block text-xs text-neutral-400 truncate"
+                  data-test="participant-email"
+                >
                   {email}
                 </p>
               </div>
               <div className="shrink-0 flex gap-2">
                 {is_confirmed ? (
-                  <span title="participante confirmado">
+                  <span
+                    title="participante confirmado"
+                    data-test="confirmed-icon"
+                  >
                     <CircleCheck className="text-primary-400 size-5 shrink-0" />
                   </span>
                 ) : (
@@ -144,6 +151,7 @@ export function Participants({ tripId }: ParticipantsProps) {
                     type="button"
                     title="confirmar participante"
                     onClick={() => handleParticipantConfirm(id)}
+                    data-test="not-confirmed-icon"
                   >
                     <CircleDashed className="text-neutral-400 hover:text-neutral-200 size-5 shrink-0" />
                   </button>
@@ -162,6 +170,7 @@ export function Participants({ tripId }: ParticipantsProps) {
                     )
                   }
                   className="text-neutral-400 hover:text-neutral-200"
+                  data-test="remove-participant"
                 >
                   <UserX className={iconStyle} />
                 </button>
@@ -178,6 +187,7 @@ export function Participants({ tripId }: ParticipantsProps) {
         variant="secondary"
         className="w-full"
         onClick={openInviteGuestsModal}
+        data-test="invite-button"
       >
         <UserPlus className={iconStyle} />
         Convidar
@@ -199,9 +209,14 @@ export function Participants({ tripId }: ParticipantsProps) {
                 name="name"
                 placeholder="Novo nome"
                 className={inputModalStyle}
+                data-test="edit-name-participant-input"
               />
             </InputModalWrapper>
-            <Button type="submit" className="w-full h-11">
+            <Button
+              type="submit"
+              className="w-full h-11"
+              data-test="confirm-name-button"
+            >
               Confirmar
             </Button>
           </form>
@@ -219,7 +234,11 @@ export function Participants({ tripId }: ParticipantsProps) {
           deleteGuestEmail={deleteGuestEmail}
         >
           {guestList.length > 0 && (
-            <Button onClick={handleInviteGuests} className="w-full h-11 -mt-2">
+            <Button
+              onClick={handleInviteGuests}
+              className="w-full h-11 -mt-2"
+              data-test="send-invite-button"
+            >
               Enviar convite{guestList.length > 1 && "s"}
             </Button>
           )}
