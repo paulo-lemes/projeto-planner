@@ -50,6 +50,7 @@ export function Participants({ tripId }: ParticipantsProps) {
       const response = await api.get(`/participants/${id}/confirm`);
       console.log(response);
 
+      openDialog("Participante confirmado!")
       setChangedParticipant((prev) => prev + 1);
     } catch (error) {
       console.log("Erro -" + error);
@@ -117,7 +118,7 @@ export function Participants({ tripId }: ParticipantsProps) {
       <div className="space-y-5">
         {participants.length > 0 ? (
           participants.map(({ id, name, email, is_confirmed }, index) => (
-            <div key={id} className="flex items-center justify-between gap-4">
+            <div key={id} className="flex items-center justify-between gap-4" data-test="participant-div">
               <div className="space-y-1.5">
                 <p className="flex font-medium text-neutral-100 space-x-2">
                   <span className="truncate" data-test="participant-name">
@@ -151,9 +152,12 @@ export function Participants({ tripId }: ParticipantsProps) {
                     type="button"
                     title="confirmar participante"
                     onClick={() => handleParticipantConfirm(id)}
-                    data-test="not-confirmed-icon"
+                    data-test="confirm-participant-button"
                   >
-                    <CircleDashed className="text-neutral-400 hover:text-neutral-200 size-5 shrink-0" />
+                    <CircleDashed
+                      className="text-neutral-400 hover:text-neutral-200 size-5 shrink-0"
+                      data-test="not-confirmed-icon"
+                    />
                   </button>
                 )}
                 <button
