@@ -45,4 +45,13 @@ describe("Participants spec", () => {
     cy.verifyDialogTextAndClose("Participante confirmado!");
     cy.getByData("not-confirmed-icon").should("not.exist");
   });
+
+  it("should remove participant properly", () => {
+    cy.getByData("participant-name").last().should("contain.text", "Ciclano");
+    cy.getByData("remove-participant-button").last().click();
+    cy.verifyDialogTextAndClose("Participante removido com sucesso");
+    cy.getByData("participant-name")
+      .last()
+      .should("not.contain.text", "Ciclano");
+  });
 });

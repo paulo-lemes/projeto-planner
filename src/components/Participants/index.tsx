@@ -174,7 +174,7 @@ export function Participants({ tripId }: ParticipantsProps) {
                     )
                   }
                   className="text-neutral-400 hover:text-neutral-200"
-                  data-test="remove-participant"
+                  data-test="remove-participant-button"
                 >
                   <UserX className={iconStyle} />
                 </button>
