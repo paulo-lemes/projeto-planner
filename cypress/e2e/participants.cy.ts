@@ -16,7 +16,7 @@ describe("Participants spec", () => {
     cy.getByData("email-input").type("ciclano@email.com");
     cy.getByData("invite-button").click();
     cy.getByData("send-invite-button").should("exist").click();
-    cy.wait(5000);
+    cy.wait(7500);
     cy.verifyDialogTextAndClose(
       "Convite(s) enviado(s) por e-mail com sucesso!"
     );

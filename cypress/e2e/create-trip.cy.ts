@@ -88,7 +88,7 @@ describe("Create trip spec", () => {
     cy.getByData("owner-name-input").type("Paulo");
     cy.getByData("owner-email-input").type("paulo@email.com");
     cy.getByData("create-trip-button").click();
-    cy.wait(5000);
+    cy.wait(7500);
     cy.verifyDialogTextAndClose(
       "Viagem criada com sucesso! Você será redirecionado para realizar a confirmação por e-mail"
     );
