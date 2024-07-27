@@ -12,11 +12,4 @@ export type {
 
 export type { Activity, Link, Participant } from "./common";
 
-export interface DialogContextType {
-  isDialogOpen: boolean;
-  openDialog: (value: string) => void;
-  closeDialog: () => void;
-  dialogText: string;
-  redirectAfterClose: string | null;
-  setRedirectAfterClose: (value: string | null) => void;
-}
+export type { DialogContextType } from "./context";
