@@ -7,7 +7,7 @@
 
 O projeto plann.er é um gerenciador de viagens com opções para convidar participantes e gerenciar atividades/links importantes. Foi desenvolvido durante o evento NLW Journey da Rocketseat e tem como base a API em Nodejs.
 
-[Repositório API](https://github.com/paulo-lemes/nlw-journey-nodejs)
+[Repositório API](https://github.com/paulo-lemes/api-planner)
 
 ## Demo
 [![Link para vídeo de demonstração no youtube](https://img.youtube.com/vi/tF0_5e9odqA/0.jpg)](https://www.youtube.com/watch?v=tF0_5e9odqA)
